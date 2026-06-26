@@ -5,7 +5,7 @@ export const siteConfig = {
     "Perusahaan jasa maklon skincare dan kosmetik terpercaya. Membantu brand owner pemula maupun profesional mewujudkan produk kecantikan dari konsep hingga siap jual.",
   waNumber: "6281234567890",
   waText: "Halo, saya ingin konsultasi maklon produk skincare.",
-  email: "hello@aquilamaklon.com",
+  email: "hello@tollmanufacturing.id",
   address: "Jl. Industri Raya No. 45, Jakarta Pusat",
   operationalHours: "Senin - Jumat, 08:00 - 17:00",
 };

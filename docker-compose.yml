@@ -1,0 +1,9 @@
+services:
+  web:
+    build: .
+    container_name: tollmanufacturing-web
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    labels:
+      - "coolify.managed=true"
