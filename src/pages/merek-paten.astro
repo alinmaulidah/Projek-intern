@@ -1,7 +1,6 @@
 ---
 import Icon from "../components/ui/Icon.astro";
 import MainLayout from "../layouts/MainLayout.astro";
-import PageHeader from "../components/ui/PageHeader.astro";
 import CTASection from "../components/sections/CTASection.astro";
 import { siteConfig } from "../data/site";
 import { createWhatsappLink } from "../lib/whatsapp";
@@ -36,7 +35,7 @@ const waLink = createWhatsappLink(siteConfig.waNumber, "Halo, saya ingin konsult
             Layanan pendaftaran merek, paten, dan perlindungan HKI untuk produk skincare & kosmetik Anda. Proses mudah, cepat, dan terpercaya.
           </p>
           <div class="mt-8 flex flex-col items-center gap-3 sm:flex-row lg:justify-start">
-            <a href={waLink} target="_blank" class="group inline-flex h-14 items-center gap-2 rounded-full bg-primary px-8 text-sm font-semibold text-white shadow-lg shadow-primary/20 transition-all duration-500 hover:scale-105 hover:shadow-xl">
+            <a href={waLink} target="_blank" rel="noopener noreferrer" class="group inline-flex h-14 items-center gap-2 rounded-full bg-primary px-8 text-sm font-semibold text-white shadow-lg shadow-primary/20 transition-all duration-500 hover:scale-105 hover:shadow-xl">
               <Icon name="mdi:whatsapp" class="h-4 w-4" />
               Konsultasi Merek
             </a>
@@ -242,14 +241,14 @@ const waLink = createWhatsappLink(siteConfig.waNumber, "Halo, saya ingin konsult
     { step: "06", title: "Perpanjangan & Pembaruan", desc: "Layanan perpanjangan merek dan pembaruan data secara berkala." },
   ];
 
-  var patenItems = document.querySelectorAll(".paten-step-item");
+  var patenItems = document.querySelectorAll<HTMLElement>(".paten-step-item");
   var patenTitle = document.getElementById("paten-detail-title");
   var patenDesc = document.getElementById("paten-detail-desc");
   var patenCurrent = document.getElementById("paten-detail-current");
 
   patenItems.forEach(function(item) {
     item.addEventListener("mouseenter", function() {
-      var idx = parseInt(this.getAttribute("data-step") || "0");
+      var idx = parseInt(item.getAttribute("data-step") || "0");
       var data = patenData[idx];
       if (patenTitle) patenTitle.textContent = data.title;
       if (patenDesc) patenDesc.textContent = data.desc;

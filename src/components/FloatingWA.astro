@@ -1,7 +1,7 @@
 ---
 import { siteConfig } from "../data/site";
 import { createWhatsappLink } from "../lib/whatsapp";
-import { Icon } from "astro-icon/components";
+import Icon from "./ui/Icon.astro";
 
 const waLink = createWhatsappLink(
   siteConfig.waNumber,
@@ -11,7 +11,7 @@ const waLink = createWhatsappLink(
 
 <a
   href={waLink}
-  target="_blank"
+  target="_blank" rel="noopener noreferrer"
   class="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-primary text-2xl text-white shadow-xl shadow-primary/20 ring-1 ring-white/20 transition-all duration-500 hover:scale-110 hover:brightness-110 hover:shadow-2xl hover:shadow-primary/30"
   aria-label="WhatsApp"
 >

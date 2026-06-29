@@ -1,7 +1,7 @@
 ---
 import Icon from "../ui/Icon.astro";
-import SectionHeader from "../ui/SectionHeader.astro";
-import { siteConfig, testimonials } from "../../data/site";
+import { siteConfig } from "../../data/site";
+import { testimonials } from "../../data/testimonials";
 import { createWhatsappLink } from "../../lib/whatsapp";
 
 const waLink = createWhatsappLink(
@@ -28,7 +28,7 @@ const waLink = createWhatsappLink(
         </p>
         <a
           href={waLink}
-          target="_blank"
+          target="_blank" rel="noopener noreferrer"
           class="btn btn-primary mt-6 rounded-full px-6 text-white shadow-md"
         >
           Konsultasi Sekarang
@@ -50,7 +50,7 @@ const waLink = createWhatsappLink(
               </div>
               <p class="mt-2 text-sm italic text-base-content/70">"{item.text}"</p>
               <div class="mt-3">
-                <p class="text-sm font-semibold">{item.owner}</p>
+                <p class="text-sm font-semibold">{item.name}</p>
                 <p class="text-xs text-primary">{item.brand}</p>
               </div>
             </div>

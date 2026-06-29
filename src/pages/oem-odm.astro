@@ -1,12 +1,11 @@
 ---
 import Icon from "../components/ui/Icon.astro";
 import MainLayout from "../layouts/MainLayout.astro";
-import PageHeader from "../components/ui/PageHeader.astro";
 import CTASection from "../components/sections/CTASection.astro";
 import { siteConfig } from "../data/site";
 import { createWhatsappLink } from "../lib/whatsapp";
 import { oemOdmStats, oemOdmProcess, oemOdmAdvantages } from "../data/oem-odm";
-import { oemOdmImages, factoryImages } from "../data/images";
+import { factoryImages } from "../data/images";
 
 const waLink = createWhatsappLink(siteConfig.waNumber, "Halo, saya ingin konsultasi layanan OEM/ODM.");
 ---
@@ -37,7 +36,7 @@ const waLink = createWhatsappLink(siteConfig.waNumber, "Halo, saya ingin konsult
             Layanan OEM (Original Equipment Manufacturing) dan ODM (Original Design Manufacturing) untuk brand Anda. Dari konsep hingga produk siap jual dengan standar kualitas premium.
           </p>
           <div class="mt-8 flex flex-col items-center gap-3 sm:flex-row lg:justify-start">
-            <a href={waLink} target="_blank" class="group inline-flex h-14 items-center gap-2 rounded-full bg-primary px-8 text-sm font-semibold text-white shadow-lg shadow-primary/20 transition-all duration-500 hover:scale-105 hover:shadow-xl">
+            <a href={waLink} target="_blank" rel="noopener noreferrer" class="group inline-flex h-14 items-center gap-2 rounded-full bg-primary px-8 text-sm font-semibold text-white shadow-lg shadow-primary/20 transition-all duration-500 hover:scale-105 hover:shadow-xl">
               <Icon name="mdi:whatsapp" class="h-4 w-4" />
               Konsultasi OEM/ODM
             </a>

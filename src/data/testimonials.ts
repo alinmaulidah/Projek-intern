@@ -1,5 +1,6 @@
 import { avatarImages } from "./images";
 
+// TODO(content): Data testimonial berikut adalah contoh/dummy. Ganti dengan testimonial asli atau tandai sebagai anonim dengan persetujuan klien.
 export const testimonials = [
   {
     name: "Rina Amelia",

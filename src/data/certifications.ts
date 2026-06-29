@@ -1,5 +1,6 @@
 import { certificationImages } from "./images";
 
+// TODO(content): Pastikan setiap sertifikasi/klaim legalitas sesuai dokumen perusahaan yang benar-benar dimiliki atau layanan yang tersedia.
 export const certifications = [
   {
     name: "BPOM",

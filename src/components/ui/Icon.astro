@@ -8,10 +8,9 @@ interface Props {
   name: string;
   class?: string;
   size?: number;
-  strokeWidth?: number;
 }
 
-const { name, class: className, size = 24, strokeWidth = 2 } = Astro.props;
+const { name, class: className, size = 24 } = Astro.props;
 const iconName = name.includes(":") ? name : `lucide:${name}`;
 ---
 
@@ -19,5 +18,4 @@ const iconName = name.includes(":") ? name : `lucide:${name}`;
   name={iconName}
   class={className}
   size={size}
-  strokeWidth={strokeWidth}
 />

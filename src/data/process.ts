@@ -1,4 +1,23 @@
-export const processSteps = [
+export type ProcessImageKey =
+  | "konsultasi"
+  | "riset"
+  | "sample"
+  | "revisi"
+  | "desain"
+  | "legalitas"
+  | "produksi"
+  | "qc"
+  | "pengiriman";
+
+export interface ProcessStep {
+  step: number;
+  title: string;
+  icon: string;
+  desc: string;
+  imageKey: ProcessImageKey;
+}
+
+export const processSteps: ProcessStep[] = [
   {
     step: 1,
     title: "Konsultasi Konsep",

@@ -12,6 +12,7 @@ export interface PortfolioItem {
   image: string;
 }
 
+// TODO(content): Portfolio berikut adalah contoh brand/dummy. Ganti dengan portfolio asli, studi kasus anonim, atau hapus jika belum boleh dipublikasikan.
 export const portfolioItems: PortfolioItem[] = [
   {
     id: "glow-labs",

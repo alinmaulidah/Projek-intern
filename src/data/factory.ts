@@ -39,6 +39,7 @@ export const factoryHighlights = [
   },
 ];
 
+// TODO(content): Angka statistik masih placeholder marketing. Ganti dengan metrik terverifikasi sebelum launch.
 export const factoryStats = [
   { label: "Produk Berhasil Dipasarkan", value: "500+" },
   { label: "Brand Partner", value: "200+" },

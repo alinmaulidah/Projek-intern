@@ -1,13 +1,10 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
-import PageHeader from "../components/ui/PageHeader.astro";
 import CTASection from "../components/sections/CTASection.astro";
 import Icon from "../components/ui/Icon.astro";
 import { siteConfig } from "../data/site";
 import { createWhatsappLink } from "../lib/whatsapp";
 import { portfolioItems, portfolioCategories } from "../data/portofolio";
-
-const waLink = createWhatsappLink(siteConfig.waNumber, siteConfig.waText);
 ---
 
 <MainLayout
@@ -108,7 +105,7 @@ const waLink = createWhatsappLink(siteConfig.waNumber, siteConfig.waText);
                     siteConfig.waNumber,
                     `Halo, saya tertarik dengan portofolio ${item.brandName}. Saya ingin konsultasi untuk membuat produk serupa.`
                   )}
-                  target="_blank"
+                  target="_blank" rel="noopener noreferrer"
                   class="btn btn-primary btn-sm rounded-full w-full text-white"
                 >
                   Konsultasi Buat Produk Serupa
@@ -134,8 +131,8 @@ const waLink = createWhatsappLink(siteConfig.waNumber, siteConfig.waText);
 
 <script>
   // Filter portfolio by category
-  const filters = document.querySelectorAll(".category-filter");
-  const cards = document.querySelectorAll(".portfolio-card");
+  const filters = document.querySelectorAll<HTMLElement>(".category-filter");
+  const cards = document.querySelectorAll<HTMLElement>(".portfolio-card");
 
   filters.forEach((btn) => {
     btn.addEventListener("click", () => {

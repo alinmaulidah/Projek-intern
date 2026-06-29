@@ -1,8 +1,8 @@
 ---
 import { siteConfig } from "../data/site";
 import { createWhatsappLink } from "../lib/whatsapp";
-import { navItems, type NavItem } from "../data/nav";
-import { Icon } from "astro-icon/components";
+import { navItems } from "../data/nav";
+import Icon from "./ui/Icon.astro";
 
 const currentPath = Astro.url.pathname;
 const waLink = createWhatsappLink(siteConfig.waNumber, siteConfig.waText);
@@ -131,7 +131,7 @@ function isChildActive(children: { href: string }[] | undefined): boolean {
       <!-- Desktop CTA -->
       <a
         href={waLink}
-        target="_blank"
+        target="_blank" rel="noopener noreferrer"
         class="btn hidden h-10 rounded-full border-none bg-primary px-5 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:brightness-110 hover:shadow-lg hover:scale-105 md:inline-flex"
       >
         <Icon name="mdi:whatsapp" class="mr-1.5 h-4 w-4" />

@@ -6,9 +6,6 @@ import Icon from "../components/ui/Icon.astro";
 import { siteConfig } from "../data/site";
 import { createWhatsappLink } from "../lib/whatsapp";
 import { services } from "../data/services";
-import { advantages } from "../data/advantages";
-
-const waLink = createWhatsappLink(siteConfig.waNumber, siteConfig.waText);
 ---
 
 <MainLayout
@@ -44,7 +41,7 @@ const waLink = createWhatsappLink(siteConfig.waNumber, siteConfig.waText);
                   <p class="mt-1 text-sm text-base-content/60">{svc.examples}</p>
                 </div>
                 <div class="card-actions mt-4">
-                  <a href={waLinkProduct} target="_blank" class="btn btn-primary btn-sm rounded-full px-5 text-white">Konsultasikan Produk Ini</a>
+                  <a href={waLinkProduct} target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm rounded-full px-5 text-white">Konsultasikan Produk Ini</a>
                 </div>
               </div>
             </div>

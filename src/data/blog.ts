@@ -13,6 +13,7 @@ export interface BlogPost {
   tags: string[];
 }
 
+// TODO(content): Artikel berikut masih draft editorial/example. Review fakta, tanggal publikasi, dan klaim bisnis sebelum dipakai sebagai konten final.
 export const blogPosts: BlogPost[] = [
   {
     slug: "panduan-memulai-brand-skincare",

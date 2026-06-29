@@ -1,12 +1,11 @@
 ---
 import Icon from "../components/ui/Icon.astro";
 import MainLayout from "../layouts/MainLayout.astro";
-import PageHeader from "../components/ui/PageHeader.astro";
 import CTASection from "../components/sections/CTASection.astro";
 import { siteConfig } from "../data/site";
 import { createWhatsappLink } from "../lib/whatsapp";
 import { rdStats, rdPhases, rdFacilities, rdInnovations } from "../data/red";
-import { factoryImages, rdImages } from "../data/images";
+import { factoryImages } from "../data/images";
 
 const waLink = createWhatsappLink(siteConfig.waNumber, "Halo, saya ingin konsultasi layanan R&D produk.");
 ---
@@ -19,14 +18,14 @@ const waLink = createWhatsappLink(siteConfig.waNumber, "Halo, saya ingin konsult
     <!-- ================================================================== -->
     <!-- 1. HERO — Professional research hero                                -->
     <!-- ================================================================== -->
-    <section class="relative overflow-hidden bg-gradient-to-b from-base-100 to-base-200 pb-16 pt-28 md:pt-36">
-      <div class="pointer-events-none absolute -right-40 -top-40 h-[600px] w-[600px] rounded-full bg-primary/5 blur-3xl"></div>
-      <div class="pointer-events-none absolute -bottom-40 -left-40 h-[400px] w-[400px] rounded-full bg-secondary/5 blur-3xl"></div>
+    <section class="relative overflow-hidden bg-linear-to-b from-base-100 to-base-200 pb-16 pt-28 md:pt-36">
+      <div class="pointer-events-none absolute -right-40 -top-40 h-150 w-150 rounded-full bg-primary/5 blur-3xl"></div>
+      <div class="pointer-events-none absolute -bottom-40 -left-40 h-100 w-100 rounded-full bg-secondary/5 blur-3xl"></div>
 
       <div class="relative mx-auto flex max-w-7xl flex-col items-center gap-12 px-4 lg:flex-row lg:px-8">
         <!-- LEFT: Text -->
         <div class="flex-1 text-center lg:text-left">
-          <span class="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/[0.04] px-5 py-1.5 text-xs font-semibold tracking-[0.15em] text-primary">
+          <span class="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/4 px-5 py-1.5 text-xs font-semibold tracking-[0.15em] text-primary">
             <span class="h-1.5 w-1.5 rounded-full bg-primary"></span>
             RESEARCH & DEVELOPMENT
           </span>
@@ -37,7 +36,7 @@ const waLink = createWhatsappLink(siteConfig.waNumber, "Halo, saya ingin konsult
             Tim R&D kami menciptakan formula inovatif yang aman, efektif, dan sesuai tren pasar. Didukung laboratorium modern dan tenaga ahli berpengalaman.
           </p>
           <div class="mt-8 flex flex-col items-center gap-3 sm:flex-row lg:justify-start">
-            <a href={waLink} target="_blank" class="group inline-flex h-14 items-center gap-2 rounded-full bg-primary px-8 text-sm font-semibold text-white shadow-lg shadow-primary/20 transition-all duration-500 hover:scale-105 hover:shadow-xl">
+            <a href={waLink} target="_blank" rel="noopener noreferrer" class="group inline-flex h-14 items-center gap-2 rounded-full bg-primary px-8 text-sm font-semibold text-white shadow-lg shadow-primary/20 transition-all duration-500 hover:scale-105 hover:shadow-xl">
               <Icon name="mdi:whatsapp" class="h-4 w-4" />
               Konsultasi R&D
             </a>
@@ -62,9 +61,9 @@ const waLink = createWhatsappLink(siteConfig.waNumber, "Halo, saya ingin konsult
 
         <!-- RIGHT: Image -->
         <div class="flex-1">
-          <div class="relative mx-auto aspect-[4/3] w-full max-w-lg overflow-hidden rounded-3xl shadow-2xl">
+          <div class="relative mx-auto aspect-4/3 w-full max-w-lg overflow-hidden rounded-3xl shadow-2xl">
             <img src={factoryImages.labResearch} alt="R&D Laboratory" class="h-full w-full object-cover" />
-            <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+            <div class="absolute inset-0 bg-linear-to-t from-black/20 to-transparent"></div>
             <div class="absolute bottom-4 left-4 rounded-full bg-white/90 px-4 py-2 text-xs font-bold text-primary shadow-lg backdrop-blur-sm">
               <Icon name="microscope" class="mr-1 inline h-3 w-3" /> Lab Research
             </div>
@@ -79,7 +78,7 @@ const waLink = createWhatsappLink(siteConfig.waNumber, "Halo, saya ingin konsult
     <section id="phases" class="bg-base-100 py-20 md:py-24">
       <div class="mx-auto max-w-7xl px-4 lg:px-8">
         <div class="mx-auto max-w-3xl text-center">
-          <span class="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/[0.04] px-5 py-1.5 text-xs font-semibold tracking-[0.15em] text-primary">
+          <span class="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/4 px-5 py-1.5 text-xs font-semibold tracking-[0.15em] text-primary">
             <span class="h-1.5 w-1.5 rounded-full bg-primary"></span>
             TAHAPAN R&D
           </span>
@@ -93,7 +92,7 @@ const waLink = createWhatsappLink(siteConfig.waNumber, "Halo, saya ingin konsult
             {rdPhases.map(function(phase, i) {
               return (
                 <div
-                  class={"rd-step-item group relative cursor-pointer rounded-2xl border p-5 transition-all duration-500 hover:bg-primary/[0.04] hover:border-primary/30 hover:scale-[1.02] hover:shadow-md" + (i === 0 ? " border-primary/20 bg-primary/[0.03] shadow-sm" : " border-base-200/80 bg-base-100")}
+                  class={"rd-step-item group relative cursor-pointer rounded-2xl border p-5 transition-all duration-500 hover:bg-primary/4 hover:border-primary/30 hover:scale-[1.02] hover:shadow-md" + (i === 0 ? " border-primary/20 bg-primary/3 shadow-sm" : " border-base-200/80 bg-base-100")}
                   data-step={i}
                 >
                   <div class="flex items-center gap-5">
@@ -106,7 +105,7 @@ const waLink = createWhatsappLink(siteConfig.waNumber, "Halo, saya ingin konsult
                     <Icon name={i === 0 ? "chevron-down" : "chevron-right"} class={"ml-auto h-4 w-4 shrink-0 transition-all duration-500" + (i === 0 ? " text-primary opacity-100" : " text-base-content/20 opacity-0 group-hover:opacity-60")} />
                   </div>
                   {i < rdPhases.length - 1 && (
-                    <div class="absolute bottom-0 left-12 h-6 w-0.5 bg-gradient-to-b from-base-300 to-transparent"></div>
+                    <div class="absolute bottom-0 left-12 h-6 w-0.5 bg-linear-to-b from-base-300 to-transparent"></div>
                   )}
                 </div>
               );
@@ -116,9 +115,9 @@ const waLink = createWhatsappLink(siteConfig.waNumber, "Halo, saya ingin konsult
           <!-- RIGHT: Detail panel -->
           <div class="flex-1 lg:sticky lg:top-24 lg:self-start">
             <div id="rd-detail-panel" class="relative overflow-hidden rounded-3xl border border-base-200 bg-base-100 p-8 shadow-lg lg:p-10">
-              <div class="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-primary/[0.04] blur-2xl"></div>
+              <div class="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-primary/4 blur-2xl"></div>
               <div class="relative z-10">
-                <div class="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-primary/80 text-2xl font-black text-white shadow-lg">
+                <div class="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-linear-to-br from-primary to-primary/80 text-2xl font-black text-white shadow-lg">
                   {rdPhases[0].step}
                 </div>
                 <h3 id="rd-detail-title" class="text-2xl font-bold">{rdPhases[0].title}</h3>
@@ -141,7 +140,7 @@ const waLink = createWhatsappLink(siteConfig.waNumber, "Halo, saya ingin konsult
     <section class="bg-base-200/40 py-20 md:py-24">
       <div class="mx-auto max-w-7xl px-4 lg:px-8">
         <div class="mx-auto max-w-3xl text-center">
-          <span class="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/[0.04] px-5 py-1.5 text-xs font-semibold tracking-[0.15em] text-primary">
+          <span class="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/4 px-5 py-1.5 text-xs font-semibold tracking-[0.15em] text-primary">
             <span class="h-1.5 w-1.5 rounded-full bg-primary"></span>
             FASILITAS & TEKNOLOGI
           </span>
@@ -173,7 +172,7 @@ const waLink = createWhatsappLink(siteConfig.waNumber, "Halo, saya ingin konsult
     <section class="bg-base-100 py-20 md:py-24">
       <div class="mx-auto max-w-7xl px-4 lg:px-8">
         <div class="mx-auto max-w-3xl text-center">
-          <span class="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/[0.04] px-5 py-1.5 text-xs font-semibold tracking-[0.15em] text-primary">
+          <span class="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/4 px-5 py-1.5 text-xs font-semibold tracking-[0.15em] text-primary">
             <span class="h-1.5 w-1.5 rounded-full bg-primary"></span>
             INOVASI
           </span>
@@ -188,12 +187,12 @@ const waLink = createWhatsappLink(siteConfig.waNumber, "Halo, saya ingin konsult
               <div class={"flex flex-col items-center gap-8 md:gap-12 " + (isEven ? "md:flex-row" : "md:flex-row-reverse")}>
                 <div class="flex-1">
                   <div class="relative overflow-hidden rounded-2xl shadow-lg">
-                    <img src={item.image} alt={item.title} class="h-full w-full object-cover aspect-[4/3]" />
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                    <img src={item.image} alt={item.title} class="h-full w-full object-cover aspect-4/3" />
+                    <div class="absolute inset-0 bg-linear-to-t from-black/20 to-transparent"></div>
                   </div>
                 </div>
                 <div class="flex-1">
-                  <span class="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/[0.04] px-4 py-1 text-[11px] font-semibold tracking-[0.12em] text-primary">
+                  <span class="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/4 px-4 py-1 text-[11px] font-semibold tracking-[0.12em] text-primary">
                     {"0" + (i + 1)}
                   </span>
                   <h3 class="mt-3 text-2xl font-bold">{item.title}</h3>
@@ -231,14 +230,14 @@ const waLink = createWhatsappLink(siteConfig.waNumber, "Halo, saya ingin konsult
     { step: "06", title: "Finalisasi & Produksi", desc: "Formula final siap diproduksi massal dengan standar kualitas tertinggi." },
   ];
 
-  var rdItems = document.querySelectorAll(".rd-step-item");
+  var rdItems = document.querySelectorAll<HTMLElement>(".rd-step-item");
   var rdTitle = document.getElementById("rd-detail-title");
   var rdDesc = document.getElementById("rd-detail-desc");
   var rdCurrent = document.getElementById("rd-detail-current");
 
   rdItems.forEach(function(item) {
     item.addEventListener("mouseenter", function() {
-      var idx = parseInt(this.getAttribute("data-step") || "0");
+      var idx = parseInt(item.getAttribute("data-step") || "0");
       var data = rdData[idx];
       if (rdTitle) rdTitle.textContent = data.title;
       if (rdDesc) rdDesc.textContent = data.desc;

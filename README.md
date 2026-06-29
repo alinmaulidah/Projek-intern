@@ -1,46 +1,47 @@
-# Astro Starter Kit: Basics
+# Website Maklon
 
-```sh
-npm create astro@latest -- --template basics
-```
+Website company profile dan katalog layanan maklon skincare/kosmetik berbasis Astro static site.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Stack
 
-## 🚀 Project Structure
+- Astro static site
+- Tailwind CSS v4
+- DaisyUI
+- Bun
+- Docker + Nginx untuk serving hasil build statis
 
-Inside of your Astro project, you'll see the following folders and files:
+## Struktur folder utama
 
 ```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
+src/pages/       Route dan komposisi halaman
+src/layouts/     Shell HTML, metadata dasar, navbar, footer
+src/components/  UI, card, dan section presentational
+src/data/        Static content/config website
+src/lib/         Helper murni seperti WhatsApp dan SEO
+src/styles/      Theme, token, dan global CSS
+public/          Asset publik seperti favicon dan logo
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+## Command development
 
-## 🧞 Commands
+```sh
+bun install --frozen-lockfile
+bun run dev
+```
 
-All commands are run from the root of the project, from a terminal:
+## Command build
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+```sh
+bun run build
+bun run preview
+```
 
-## 👀 Want to learn more?
+Hasil build berada di `dist/` dan diabaikan oleh Git.
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## Catatan konten
+
+Sebagian data bisnis seperti nomor WhatsApp, email, alamat, copy layanan, artikel blog, dan gambar masih perlu divalidasi sebelum production.
+
+## Deployment
+
+Repository menyediakan `Dockerfile`, `docker-compose.yml`, dan `nginx.conf` untuk build dengan Bun lalu serving static files melalui Nginx. Jika memakai reverse proxy, sesuaikan konfigurasi port/network di environment deployment.

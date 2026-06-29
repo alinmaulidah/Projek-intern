@@ -2,17 +2,20 @@ interface SEOProps {
   title: string;
   description: string;
   canonical?: string;
+  image?: string;
+  type?: "website" | "article";
 }
 
-export function generateSEOHeaders({ title, description, canonical }: SEOProps) {
+export function generateSEOHeaders({ title, description, canonical, image, type = "website" }: SEOProps) {
   return {
     title,
     description,
     canonical,
+    image,
     openGraph: {
       title,
       description,
-      type: "website" as const,
+      type,
       locale: "id_ID",
     },
   };

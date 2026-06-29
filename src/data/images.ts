@@ -2,6 +2,7 @@
 // LIBRARY FOTO TERPUSAT — Aquila Maklon
 // Semua gambar menggunakan foto gratis dari Unsplash / Pexels / Pixabay.
 // Cukup ganti URL di sini untuk menyesuaikan seluruh website.
+// TODO(content): Ganti foto stok eksternal dengan aset brand/fasilitas asli saat materi final tersedia.
 // =============================================================================
 
 // --- HERO & BANNER (landscape 16:9, 1600px wide) ---

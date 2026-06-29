@@ -1,10 +1,8 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
-import PageHeader from "../components/ui/PageHeader.astro";
 import CTASection from "../components/sections/CTASection.astro";
-import { siteConfig } from "../data/site";
 import { blogPosts, blogCategories } from "../data/blog";
-import { Icon } from "astro-icon/components";
+import Icon from "../components/ui/Icon.astro";
 ---
 
 <MainLayout
@@ -102,8 +100,8 @@ import { Icon } from "astro-icon/components";
 
 <script>
   // Filter blog posts by category
-  const filters = document.querySelectorAll(".category-filter");
-  const cards = document.querySelectorAll(".blog-card");
+  const filters = document.querySelectorAll<HTMLElement>(".category-filter");
+  const cards = document.querySelectorAll<HTMLElement>(".blog-card");
 
   filters.forEach((btn) => {
     btn.addEventListener("click", () => {

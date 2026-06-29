@@ -1,0 +1,74 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import CTASection from "../../components/sections/CTASection.astro";
+import { blogPosts } from "../../data/blog";
+import Icon from "../../components/ui/Icon.astro";
+
+export function getStaticPaths() {
+  return blogPosts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+---
+
+<MainLayout
+  title={`${post.title} | Aquila Maklon`}
+  description={post.excerpt}
+>
+  <main>
+    <article class="mx-auto max-w-4xl px-4 pb-16 pt-28 lg:px-8 md:pt-36">
+      <a href="/blog" class="inline-flex items-center gap-2 text-sm font-semibold text-primary transition-colors hover:text-secondary">
+        <Icon name="mdi:arrow-left" class="h-4 w-4" />
+        Kembali ke Blog
+      </a>
+
+      <header class="mt-8">
+        <div class="flex flex-wrap items-center gap-3 text-sm text-base-content/55">
+          <span class="badge badge-soft badge-primary rounded-full px-3 py-2">{post.category}</span>
+          <span>{post.date}</span>
+          <span aria-hidden="true">•</span>
+          <span>{post.readTime}</span>
+        </div>
+
+        <h1 class="mt-5 text-4xl font-black leading-tight text-base-content md:text-5xl">
+          {post.title}
+        </h1>
+        <p class="mt-5 text-lg leading-relaxed text-base-content/70">
+          {post.excerpt}
+        </p>
+        <p class="mt-4 text-sm font-semibold text-primary">
+          {post.author}
+        </p>
+      </header>
+
+      <figure class="mt-10 overflow-hidden rounded-3xl bg-base-200 shadow-xl">
+        <img
+          src={post.image}
+          alt={post.title}
+          class="h-full max-h-[520px] w-full object-cover"
+          loading="eager"
+          decoding="async"
+        />
+      </figure>
+
+      <div class="mt-10 text-lg leading-relaxed text-base-content/75">
+        <p>{post.content}</p>
+      </div>
+
+      <footer class="mt-10 flex flex-wrap gap-2 border-t border-base-300 pt-6">
+        {post.tags.map((tag) => (
+          <span class="badge badge-outline rounded-full px-3 py-2 text-base-content/60">#{tag}</span>
+        ))}
+      </footer>
+    </article>
+
+    <CTASection
+      title="Siap Konsultasi Produk Maklon?"
+      description="Diskusikan kebutuhan produk dan legalitas brand Anda bersama tim kami."
+      buttonText="Konsultasi via WhatsApp"
+    />
+  </main>
+</MainLayout>

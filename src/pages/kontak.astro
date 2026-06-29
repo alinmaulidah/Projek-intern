@@ -6,10 +6,6 @@ import { createWhatsappLink } from "../lib/whatsapp";
 import { companyImages } from "../data/images";
 
 const waLink = createWhatsappLink(siteConfig.waNumber, siteConfig.waText);
-const waLinkForm = createWhatsappLink(
-  siteConfig.waNumber,
-  "Halo, saya ingin konsultasi maklon produk."
-);
 ---
 
 <MainLayout
@@ -47,7 +43,7 @@ const waLinkForm = createWhatsappLink(
             <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-green-100 text-3xl"><Icon name="mdi:whatsapp" size={32} class="text-green-600" /></div>
             <h3 class="card-title mt-3">WhatsApp</h3>
             <p class="mt-1 text-sm text-base-content/60">{siteConfig.waNumber}</p>
-            <a href={waLink} target="_blank" class="btn btn-primary btn-sm mt-3 rounded-full px-5 text-white">
+            <a href={waLink} target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm mt-3 rounded-full px-5 text-white">
               Chat Sekarang
             </a>
           </div>
@@ -91,7 +87,7 @@ const waLinkForm = createWhatsappLink(
               <div class="absolute bottom-6 left-6">
                 <p class="text-lg font-semibold text-white">Alamat Kantor</p>
                 <p class="text-sm text-white/80">{siteConfig.address}</p>
-                <a href={waLink} target="_blank" class="btn btn-primary btn-sm mt-3 rounded-full px-5 text-white">
+                <a href={waLink} target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm mt-3 rounded-full px-5 text-white">
                   Tanya Lokasi via WhatsApp
                 </a>
               </div>
@@ -193,28 +189,29 @@ const waLinkForm = createWhatsappLink(
     </section>
 
     <script>
+      import { createConsultationMessage, createWhatsappLink } from "../lib/whatsapp";
+
       document.addEventListener('DOMContentLoaded', function () {
         const form = document.getElementById('consultForm');
         if (!form) return;
         const waNumber = form.getAttribute('data-wa-number');
+        if (!waNumber) return;
         form.addEventListener('submit', function (e) {
           e.preventDefault();
-          const nama = document.getElementById('nama').value;
-          const wa = document.getElementById('wa').value;
-          const email = document.getElementById('email').value;
-          const produk = document.getElementById('produk').value;
-          const estimasi = document.getElementById('estimasi').value;
-          const pesan = document.getElementById('pesan').value;
+          const getValue = (id: string) => {
+            const field = document.getElementById(id);
+            return field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement || field instanceof HTMLSelectElement ? field.value : '';
+          };
+          const nama = getValue('nama');
+          const wa = getValue('wa');
+          const email = getValue('email');
+          const produk = getValue('produk');
+          const estimasi = getValue('estimasi');
+          const pesan = getValue('pesan');
 
-          const message = 'Halo, saya ingin konsultasi maklon.%0A%0A'
-            + 'Nama: ' + encodeURIComponent(nama) + '%0A'
-            + 'No. WhatsApp: ' + encodeURIComponent(wa) + '%0A'
-            + 'Email: ' + encodeURIComponent(email) + '%0A'
-            + 'Jenis Produk: ' + encodeURIComponent(produk) + '%0A'
-            + 'Estimasi: ' + encodeURIComponent(estimasi) + '%0A'
-            + 'Pesan: ' + encodeURIComponent(pesan);
+          const message = createConsultationMessage({ nama, wa, email, produk, estimasi, pesan });
 
-          window.open('https://wa.me/' + waNumber + '?text=' + message, '_blank');
+          window.open(createWhatsappLink(waNumber, message), '_blank', 'noopener,noreferrer');
         });
       });
     </script>

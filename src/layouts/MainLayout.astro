@@ -4,17 +4,49 @@ import { siteConfig } from "../data/site";
 import Navbar from "../components/Navbar.astro";
 import Footer from "../components/Footer.astro";
 import FloatingWA from "../components/FloatingWA.astro";
-import { AstroFont } from "astro-font";
 
 interface Props {
   title?: string;
   description?: string;
+  image?: string;
+  canonical?: string;
+  type?: "website" | "article";
 }
 
 const {
-  title = "Aquila Maklon",
+  title = siteConfig.name,
   description = siteConfig.description,
+  image = siteConfig.defaultOgImage,
+  canonical,
+  type = "website",
 } = Astro.props;
+
+const resolveUrl = (pathOrUrl: string) => new URL(pathOrUrl, siteConfig.url).toString();
+const canonicalUrl = resolveUrl(canonical ?? Astro.url.pathname);
+const ogImageUrl = resolveUrl(image);
+const logoUrl = resolveUrl("/assets/Logo.svg");
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: siteConfig.name,
+  url: siteConfig.url,
+  logo: logoUrl,
+  description: siteConfig.description,
+  email: siteConfig.email,
+  telephone: `+${siteConfig.waNumber}`,
+  contactPoint: {
+    "@type": "ContactPoint",
+    telephone: `+${siteConfig.waNumber}`,
+    contactType: "customer service",
+    areaServed: "ID",
+    availableLanguage: ["id"],
+  },
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: siteConfig.address,
+    addressCountry: "ID",
+  },
+};
 ---
 
 <!doctype html>
@@ -27,46 +59,26 @@ const {
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
-    <meta property="og:locale" content="id_ID" />
-    <meta property="og:image" content="/assets/Logo.svg" />
+    <meta property="og:type" content={type} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:site_name" content={siteConfig.name} />
+    <meta property="og:locale" content={siteConfig.locale} />
+    <meta property="og:image" content={ogImageUrl} />
     <meta property="og:image:width" content="562" />
     <meta property="og:image:height" content="158" />
-    <AstroFont
-      config={[
-        {
-          name: "Arsenal",
-          src: [],
-          googleFontsURL: "https://fonts.googleapis.com/css2?family=Arsenal:wght@400;700&display=swap",
-          preload: true,
-          display: "swap",
-          selector: "h1, h2, h3, h4, h5, h6",
-          fallback: "sans-serif",
-          cssVariable: "font-heading",
-        },
-        {
-          name: "Karla",
-          src: [],
-          googleFontsURL: "https://fonts.googleapis.com/css2?family=Karla:wght@300;400;600;700;800&display=swap",
-          preload: true,
-          display: "swap",
-          selector: "body",
-          fallback: "sans-serif",
-          cssVariable: "font-body",
-        },
-        {
-          name: "Josefin Slab",
-          src: [],
-          googleFontsURL: "https://fonts.googleapis.com/css2?family=Josefin+Slab:wght@300;400;600;700&display=swap",
-          preload: true,
-          display: "swap",
-          selector: ".small-text",
-          fallback: "serif",
-          cssVariable: "font-small",
-        },
-      ]}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(organizationJsonLd)} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Arsenal:wght@400;700&family=Josefin+Slab:wght@300;400;600;700&family=Karla:wght@300;400;600;700;800&display=swap"
+      rel="stylesheet"
     />
   </head>
   <body>

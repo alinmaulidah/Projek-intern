@@ -72,7 +72,7 @@ const slides = [
       <div class="mt-10 flex animate-fade-in-up flex-col items-center justify-center gap-4 sm:flex-row" style="animation-delay: 0.2s">
         <a
           href={waLink}
-          target="_blank"
+          target="_blank" rel="noopener noreferrer"
           class="btn btn-lg h-14 min-h-14 rounded-full border-2 border-white bg-white px-10 text-base text-primary shadow-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl"
         >
           <Icon name="mdi:whatsapp" class="mr-2 h-5 w-5" />
@@ -187,7 +187,7 @@ const slides = [
     },
   ];
 
-  function goToSlide(idx) {
+  function goToSlide(idx: number) {
     // Hide all slides
     for (let i = 0; i < slidesCount; i++) {
       const slide = document.getElementById(`hero-slide-${i}`);
