@@ -14,23 +14,23 @@ export interface NavItem {
 export const navItems: NavItem[] = [
   { label: "Home", href: "/" },
   {
-    label: "About us",
+    label: "Tentang Kami",
     children: [
       { label: "Perusahaan", href: "/tentang-kami", description: "Profil & visi misi perusahaan", icon: "mdi:office-building" },
       { label: "Sertifikasi", href: "/sertifikasi", description: "Sertifikasi & legalitas produk", icon: "mdi:check-decagram" },
       { label: "Alur Maklon", href: "/alur-maklon", description: "Tahapan proses maklon", icon: "mdi:sign-direction" },
-      { label: "Kontak", href: "/kontak", description: "Hubungi tim Aquila Maklon", icon: "mdi:phone" },
+      { label: "Kontak", href: "/kontak", description: "Hubungi tim Aquila Magna", icon: "mdi:phone" },
     ],
   },
   {
-    label: "Services",
+    label: "Layanan Maklon",
     children: [
       { label: "OEM / ODM", href: "/oem-odm", description: "Jasa maklon skincare & kosmetik", icon: "mdi:factory" },
-      { label: "RED", href: "/red", description: "Research & product development", icon: "mdi:flask" },
+      { label: "R&D / Formulasi", href: "/research-development", description: "Research & development produk", icon: "mdi:flask" },
       { label: "Merek & Paten", href: "/merek-paten", description: "Pendaftaran merek & HKI", icon: "mdi:file-certificate" },
     ],
   },
-  { label: "Products", href: "/produk-maklon" },
-  { label: "Portfolio", href: "/portofolio" },
+  { label: "Produk Maklon", href: "/produk-maklon" },
+  { label: "Portofolio", href: "/portofolio" },
   { label: "Blog", href: "/blog" },
 ];
