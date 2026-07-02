@@ -4,38 +4,42 @@ import MainLayout from "../layouts/MainLayout.astro";
 import { siteConfig } from "../data/site";
 import { createWhatsappLink } from "../lib/whatsapp";
 import { advantages } from "../data/advantages";
-import { factoryStats } from "../data/factory";
 import { services } from "../data/services";
 import { processSteps } from "../data/process";
+import { products } from "../data/products";
 import { testimonials } from "../data/testimonials";
-import { heroImages, processImages } from "../data/images";
-
-const processPreviewSteps = processSteps.slice(0, 4);
+import { faqs } from "../data/faqs";
+import { categoryImages, factoryImages, processImages, productImages, heroImages } from "../data/images";
+import { certifications } from "../data/certifications";
 
 const waLink = createWhatsappLink(siteConfig.waNumber, siteConfig.waText);
+const waKonsultasi = createWhatsappLink(siteConfig.waNumber, "Halo, saya ingin konsultasi mengenai maklon skincare/kosmetik.");
+const processPreviewSteps = processSteps.slice(0, 5);
+const topProducts = products.slice(0, 8);
+const categories = categoryImages.slice(0, 6);
 
 const heroSlides = [
-  {
-    image: heroImages.skincareHero,
-    gradient: "from-emerald-950/85 via-primary/75 to-primary/70",
-    badge: "PARTNER MAKLON PROFESIONAL",
-    title: "Wujudkan Brand Kecantikan Sendiri",
-    desc: "Kami bantu proses maklon dari konsultasi, formulasi, produksi, legalitas, hingga produk siap jual.",
-  },
-  {
-    image: heroImages.formulasiHero,
-    gradient: "from-primary/90 via-primary/80 to-emerald-900/85",
-    badge: "FORMULA CUSTOM & INOVATIF",
-    title: "Riset & Formulasi oleh Tim Ahli",
-    desc: "Tim R&D berpengalaman menciptakan formula eksklusif sesuai tren dan kebutuhan brand Anda.",
-  },
-  {
-    image: heroImages.skincareHero,
-    gradient: "from-teal-950/85 via-primary/80 to-primary/75",
-    badge: "BPOM, HALAL & SIAP JUAL",
-    title: "Legalitas Lengkap, Produk Siap Dipasarkan",
-    desc: "BPOM, Halal, HKI — semua diurus. Anda tinggal fokus jualan.",
-  },
+  { image: heroImages.skincareLab, label: "Laboratorium Modern", subtitle: "Formulasi presisi dengan teknologi terkini" },
+  { image: heroImages.skincareProduction, label: "Produksi Berkualitas", subtitle: "Standar CPKB & GMP terjaga ketat" },
+  { image: heroImages.packagingReady, label: "Siap Dikemas & Kirim", subtitle: "Produk jadi langsung siap distribusi" },
+  { image: heroImages.labResearch, label: "Riset & Inovasi", subtitle: "500+ formula siap dikustomisasi" },
+];
+
+const galleryItems = [
+  { label: "Laboratorium R&D", image: factoryImages.labResearch, icon: "lucide:flask-conical" },
+  { label: "Ruang QC", image: factoryImages.qualityControl, icon: "lucide:microscope" },
+  { label: "Lini Produksi", image: factoryImages.productionLine, icon: "lucide:factory" },
+  { label: "Area Pengemasan", image: factoryImages.packagingArea, icon: "lucide:package" },
+  { label: "Ruang Sampling", image: factoryImages.samplingRoom, icon: "lucide:beaker" },
+  { label: "Gudang Bahan Baku", image: factoryImages.bahanBaku, icon: "lucide:warehouse" },
+];
+
+const comparisons = [
+  { aspect: "Kepemilikan Pabrik", us: "Pabrik Milik Sendiri", them: "Sering pihak ketiga" },
+  { aspect: "Formulasi", us: "Custom 500+ Formula", them: "Terbatas / template" },
+  { aspect: "Legalitas", us: "BPOM + Halal + HKI", them: "Belum tentu lengkap" },
+  { aspect: "MOQ", us: "Fleksibel", them: "Cenderung tinggi" },
+  { aspect: "Pendampingan", us: "Konsultasi gratis", them: "Sering terbatas" },
 ];
 ---
 
@@ -43,72 +47,82 @@ const heroSlides = [
   title="Aquila Magna – Jasa Maklon Skincare & Kosmetik Terpercaya"
   description={siteConfig.description}
 >
-  <main>
-    <!-- ================================================================== -->
-    <!-- 1. HERO — Full height slider                                      -->
-    <!-- ================================================================== -->
-    <section id="hero" class="relative flex min-h-[80vh] items-center overflow-hidden">
-      {heroSlides.map((slide, idx) => (
-        <div
-          id={`hero-slide-bg-${idx}`}
-          class="hero-bg-slide absolute inset-0 z-0 bg-cover bg-center transition-all duration-1000 ease-in-out"
-          class:list={{ "opacity-100 scale-100": idx === 0, "opacity-0 scale-105": idx !== 0 }}
-          style={`background-image: url('${slide.image}');`}
-        >
-          <div class={`absolute inset-0 bg-gradient-to-br ${slide.gradient}`}></div>
-          <div class="absolute inset-0 opacity-[0.03]" style="background-image: radial-gradient(circle at 25% 25%, white 1px, transparent 1px); background-size: 40px 40px;"></div>
-        </div>
-      ))}
+  <main class="overflow-x-hidden">
 
-      <div class="relative z-10 mx-auto w-full max-w-7xl px-4 py-20 lg:px-8">
-        <div class="max-w-3xl">
-          <div class="mb-4 inline-flex min-w-0 items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.06] px-5 py-1.5 backdrop-blur-xl">
-            <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-300"></span>
-            <span id="hero-badge" class="text-xs font-semibold tracking-[0.15em] text-white/80">{heroSlides[0].badge}</span>
+    <!-- ================================================================== -->
+    <!-- 1. HERO — Fullscreen Image Slider                                  -->
+    <!-- ================================================================== -->
+    <section id="hero" class="relative flex min-h-screen items-end pb-16 md:items-center md:pb-0">
+      <!-- Background Slides -->
+      <div class="absolute inset-0 z-0">
+        {heroSlides.map((slide, idx) => (
+          <div
+            class="hero-slide absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-1000 ease-in-out"
+            class:list={{ "opacity-100": idx === 0, "opacity-0": idx !== 0 }}
+            style={`background-image: url('${slide.image}')`}
+          ></div>
+        ))}
+        <!-- Dark overlay -->
+        <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/75 md:bg-gradient-to-r md:from-black/75 md:via-black/50 md:to-black/60"></div>
+      </div>
+
+      <!-- Content -->
+      <div class="relative z-10 mx-auto w-full max-w-7xl px-4 pb-8 md:pb-0 lg:px-8">
+        <div class="max-w-2xl">
+          <!-- Live badge -->
+          <div class="mb-6 inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/8 px-5 py-2.5 backdrop-blur-lg">
+            <span class="relative flex h-2.5 w-2.5">
+              <span class="absolute inset-0 animate-ping rounded-full bg-emerald-400 opacity-75"></span>
+              <span class="relative h-2.5 w-2.5 rounded-full bg-emerald-400"></span>
+            </span>
+            <span class="text-xs font-bold tracking-[0.16em] text-white/80 uppercase">Partner Maklon Profesional</span>
           </div>
-          <h1 id="hero-title" class="text-3xl font-bold leading-tight text-white md:text-5xl lg:text-6xl xl:text-7xl">
-            {heroSlides[0].title}
+
+          <h1 class="text-4xl font-black leading-[1.06] text-white md:text-5xl lg:text-6xl xl:text-7xl">
+            Wujudkan Brand<br />
+            <span class="bg-gradient-to-r from-emerald-300 via-green-200 to-white bg-clip-text text-transparent">
+              Kecantikan Anda
+            </span>
           </h1>
-          <p id="hero-desc" class="mt-4 max-w-2xl text-sm leading-relaxed text-white/65 md:text-base lg:text-lg">
-            {heroSlides[0].desc}
+
+          <p class="mt-5 max-w-lg text-sm leading-relaxed text-white/55 md:text-base lg:text-lg">
+            Dari formulasi, produksi, legalitas BPOM & Halal, hingga produk siap jual —
+            <span class="font-semibold text-white/75">kami dampingi penuh</span>.
           </p>
+
           <div class="mt-8 flex flex-wrap items-center gap-4">
-            <a href={waLink} target="_blank" rel="noopener noreferrer"
-              class="group inline-flex h-12 items-center gap-2.5 rounded-full bg-white px-8 text-sm font-semibold text-primary shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl">
-              <Icon name="mdi:whatsapp" class="h-4 w-4" />
-              Konsultasi via WhatsApp
+            <a href={waKonsultasi} target="_blank" rel="noopener noreferrer"
+              class="group relative inline-flex h-14 items-center gap-2.5 overflow-hidden rounded-xl bg-white px-8 text-base font-bold text-primary shadow-xl shadow-black/20 transition-all duration-500 hover:-translate-y-0.5 hover:shadow-2xl hover:shadow-primary/15">
+              <Icon name="mdi:whatsapp" class="relative z-10 h-5 w-5" />
+              <span class="relative z-10">Konsultasi Gratis</span>
+              <Icon name="lucide:arrow-right" class="relative z-10 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
             </a>
-            <a href="/outsourcing-flow"
-              class="group inline-flex h-12 items-center gap-1.5 rounded-full border border-white/20 bg-white/[0.06] px-8 text-sm font-medium text-white backdrop-blur-xl transition-all duration-300 hover:border-white/40 hover:bg-white/[0.12]">
+            <a href="/alur-maklon"
+              class="group inline-flex h-14 items-center gap-2 rounded-xl border border-white/20 bg-white/5 px-8 text-sm font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:border-white/40 hover:bg-white/10">
               Lihat Alur Maklon
-              <Icon name="lucide:arrow-right" class="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5" />
+              <Icon name="lucide:arrow-right" class="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
             </a>
           </div>
 
-          <!-- Trust badges row -->
-          <div class="mt-10 flex flex-wrap items-center gap-x-6 gap-y-2">
-            <span class="inline-flex items-center gap-1.5 text-xs text-white/40">
-              <Icon name="lucide:shield-check" class="h-3.5 w-3.5 text-emerald-300/60" /> BPOM Terdaftar
-            </span>
-            <span class="inline-flex items-center gap-1.5 text-xs text-white/40">
-              <Icon name="lucide:award" class="h-3.5 w-3.5 text-emerald-300/60" /> Sertifikat Halal
-            </span>
-            <span class="inline-flex items-center gap-1.5 text-xs text-white/40">
-              <Icon name="lucide:shield-check" class="h-3.5 w-3.5 text-emerald-300/60" /> CPKB Standard
-            </span>
-            <span class="inline-flex items-center gap-1.5 text-xs text-white/40">
-              <Icon name="lucide:award" class="h-3.5 w-3.5 text-emerald-300/60" /> ISO 9001:2015
-            </span>
+          <!-- Trust badges -->
+          <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2">
+            {["BPOM Terdaftar", "Sertifikat Halal MUI", "ISO 9001:2015", "CPKB Certified"].map((t) => (
+              <span class="inline-flex items-center gap-1.5 text-[11px] font-medium text-white/35">
+                <Icon name="lucide:shield-check" class="h-3 w-3 text-emerald-400/30" />
+                {t}
+              </span>
+            ))}
           </div>
         </div>
       </div>
 
-      <!-- Slide dots -->
-      <div class="absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 gap-2">
+      <!-- Slide indicators -->
+      <div class="absolute bottom-8 right-4 z-10 flex items-center gap-2 md:right-8 lg:right-12">
         {heroSlides.map((_, idx) => (
           <button
-            id={`hero-dot-${idx}`}
-            class={`hero-dot rounded-full transition-all duration-500 ${idx === 0 ? "h-2 w-8 bg-white" : "h-2 w-2 bg-white/30"}`}
+            class="hero-dot h-1.5 rounded-full bg-white transition-all duration-500"
+            class:list={{ "w-8 bg-white": idx === 0, "w-1.5 bg-white/30 hover:bg-white/50": idx !== 0 }}
+            data-slide={idx}
             aria-label={`Slide ${idx + 1}`}
           ></button>
         ))}
@@ -116,30 +130,41 @@ const heroSlides = [
     </section>
 
     <!-- ================================================================== -->
-    <!-- 2. LAYANAN                                                        -->
+    <!-- 2. CATEGORY — Grid cards seperti Layanan (4 kolom)                   -->
     <!-- ================================================================== -->
-    <section class="bg-base-100 py-16 md:py-20">
+    <section class="bg-base-100 py-20 md:py-28">
       <div class="mx-auto max-w-7xl px-4 lg:px-8">
         <div class="mx-auto max-w-2xl text-center">
-          <span class="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/[0.04] px-4 py-1 text-[11px] font-semibold tracking-[0.12em] text-primary">
-            LAYANAN MAKLON
-          </span>
-          <h2 class="mt-3 text-3xl font-bold md:text-4xl">Solusi Lengkap untuk Brand Kecantikan Anda</h2>
-          <p class="mt-3 text-sm text-base-content/55">Konsultasi gratis, proses transparan, hasil maksimal.</p>
+          <span class="badge badge-soft badge-primary text-xs font-bold tracking-widest uppercase">Kategori Produk</span>
+          <h2 class="mt-4 text-3xl font-black md:text-4xl lg:text-5xl">
+            Semua Kategori<br class="hidden sm:block" /> Produk Kecantikan
+          </h2>
+          <p class="mt-4 text-sm leading-relaxed text-base-content/45 md:text-base">
+            Dari skincare hingga baby care — semua bisa diproduksi dalam satu tempat.
+          </p>
         </div>
 
-        <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {services.map((svc) => {
-            const waService = createWhatsappLink(siteConfig.waNumber, `Halo, saya ingin konsultasi maklon ${svc.title}.`);
+        <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {categories.map((cat) => {
+            const waCat = createWhatsappLink(siteConfig.waNumber, `Halo, saya tertarik dengan produk kategori ${cat.name}. Bisa info lebih lanjut?`);
             return (
-              <div class="group relative overflow-hidden rounded-2xl border border-base-200/80 bg-base-100 p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary/20 hover:shadow-lg">
-                <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-2xl transition-transform duration-300 group-hover:scale-110"><Icon name={svc.icon} size={24} /></div>
-                <h3 class="text-base font-bold transition-colors duration-300 group-hover:text-primary">{svc.title}</h3>
-                <p class="mt-1 text-sm leading-relaxed text-base-content/55 line-clamp-2">{svc.desc}</p>
-                <a href={waService} target="_blank" rel="noopener noreferrer" class="mt-4 inline-flex items-center gap-1 text-xs font-semibold text-primary opacity-0 transition-all duration-300 group-hover:opacity-100">
-                  Konsultasi <Icon name="lucide:arrow-right" class="h-3 w-3" />
-                </a>
-              </div>
+              <a href={waCat} target="_blank" rel="noopener noreferrer"
+                class="group relative block overflow-hidden rounded-2xl border border-base-200/60 bg-white shadow-sm transition-all duration-500 hover:-translate-y-2 hover:border-primary/20 hover:shadow-xl"
+              >
+                <div class="relative aspect-[4/5] w-full overflow-hidden">
+                  <img src={cat.image} alt={cat.name} class="h-full w-full object-cover transition-all duration-700 ease-out group-hover:scale-105" loading="lazy" />
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent"></div>
+                  <div class="absolute bottom-0 left-0 right-0 p-5">
+                    <h3 class="text-lg font-bold text-white drop-shadow-md">{cat.name}</h3>
+                  </div>
+                  <!-- Hover overlay -->
+                  <div class="absolute inset-0 flex items-center justify-center bg-black/45 opacity-0 backdrop-blur-[1px] transition-all duration-500 group-hover:opacity-100">
+                    <span class="translate-y-3 rounded-xl bg-white px-6 py-2.5 text-sm font-bold text-primary shadow-lg transition-transform duration-500 group-hover:translate-y-0">
+                      Konsultasi {cat.name}
+                    </span>
+                  </div>
+                </div>
+              </a>
             );
           })}
         </div>
@@ -147,46 +172,25 @@ const heroSlides = [
     </section>
 
     <!-- ================================================================== -->
-    <!-- 3. STATISTIK                                                       -->
-    <!-- ================================================================== -->
-    <section class="relative overflow-hidden bg-primary py-16 md:py-20">
-      <div class="absolute inset-0 opacity-[0.07]" style="background-image: radial-gradient(circle, rgba(255,255,255,0.3) 1px, transparent 1px); background-size: 50px 50px;"></div>
-
-      <div class="relative mx-auto max-w-7xl px-4 lg:px-8">
-        <div class="mb-10 text-center">
-          <span class="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-1 text-[11px] font-semibold tracking-[0.12em] text-white">OUR NUMBERS</span>
-          <h2 class="mt-3 text-3xl font-bold text-white md:text-4xl">Aquila Magna dalam Angka</h2>
-        </div>
-        <div class="grid grid-cols-2 gap-6 md:grid-cols-4">
-          {factoryStats.map((stat) => (
-            <div class="text-center">
-              <div class="mx-auto flex h-24 w-24 items-center justify-center rounded-2xl border border-white/20 bg-white/15 shadow-sm backdrop-blur-md transition-all duration-500 hover:scale-110 hover:bg-white/25 hover:shadow-lg">
-                <span class="text-3xl font-black text-white">{stat.value}</span>
-              </div>
-              <p class="mt-3 text-sm font-medium text-white/75">{stat.label}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-
-    <!-- ================================================================== -->
-    <!-- 4. KEUNGGULAN                                                      -->
+    <!-- 3. STATS — Animated counters                                        -->
     <!-- ================================================================== -->
     <section class="bg-base-100 py-16 md:py-20">
       <div class="mx-auto max-w-7xl px-4 lg:px-8">
-        <div class="mx-auto max-w-2xl text-center">
-          <span class="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/[0.04] px-4 py-1 text-[11px] font-semibold tracking-[0.12em] text-primary">KEUNGGULAN KAMI</span>
-          <h2 class="mt-3 text-3xl font-bold md:text-4xl">Kenapa Aquila Magna?</h2>
-          <p class="mt-3 text-sm text-base-content/55">Setiap detail diperhatikan untuk hasil terbaik.</p>
-        </div>
-
-        <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {advantages.map((adv) => (
-            <div class="group relative overflow-hidden rounded-2xl border border-base-200/80 bg-base-100 p-6 text-center shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary/15 hover:shadow-lg">
-              <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-xl bg-primary/10 text-3xl transition-transform duration-300 group-hover:scale-110"><Icon name={adv.icon} size={32} /></div>
-              <h3 class="mt-4 text-base font-bold transition-colors group-hover:text-primary">{adv.title}</h3>
-              <p class="mt-1 text-sm leading-relaxed text-base-content/55">{adv.desc}</p>
+        <div class="grid grid-cols-2 gap-4 md:grid-cols-4">
+          {[
+            { value: 500, suffix: "+", label: "Formula", icon: "lucide:flask-conical" },
+            { value: 200, suffix: "+", label: "Brand Partner", icon: "lucide:building-2" },
+            { value: 10, suffix: "+", label: "Tahun", icon: "lucide:clock" },
+            { value: 50, suffix: "+", label: "Tenaga Ahli", icon: "lucide:users" },
+          ].map((stat) => (
+            <div class="group relative overflow-hidden rounded-2xl border border-base-200/60 bg-white p-6 text-center shadow-sm transition-all duration-500 hover:-translate-y-1 hover:border-primary/15 hover:shadow-lg">
+              <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/5 transition-all duration-500 group-hover:scale-110 group-hover:bg-primary/10">
+                <Icon name={stat.icon} class="h-5 w-5 text-primary/60" />
+              </div>
+              <p class="mt-3 text-3xl font-black text-primary tabular-nums">
+                <span class="stat-counter" data-target={stat.value}>{stat.value}</span>{stat.suffix}
+              </p>
+              <p class="mt-1 text-xs font-semibold tracking-wider text-base-content/35 uppercase">{stat.label}</p>
             </div>
           ))}
         </div>
@@ -194,135 +198,245 @@ const heroSlides = [
     </section>
 
     <!-- ================================================================== -->
-    <!-- 5. PROSES — Interactive Image + Timeline Slider                    -->
+    <!-- 4. LAYANAN — Service cards with image hover overlay                 -->
     <!-- ================================================================== -->
-    <section id="alur-maklon" class="bg-gradient-to-b from-base-100 to-base-200/40 py-16 md:py-24">
+    <section id="layanan" class="bg-base-200/50 py-20 md:py-28">
       <div class="mx-auto max-w-7xl px-4 lg:px-8">
-        <!-- HEADER -->
         <div class="mx-auto max-w-2xl text-center">
-          <span class="process-animate inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/[0.04] px-4 py-1 text-[11px] font-semibold tracking-[0.12em] text-primary opacity-0">ALUR MAKLON</span>
-          <h2 class="process-animate mt-3 text-3xl font-bold md:text-4xl opacity-0 translate-y-4">Proses Mudah & Terarah</h2>
-          <p class="process-animate mt-3 text-sm text-base-content/55 opacity-0 translate-y-4">Dari ide ke produk siap jual tanpa hambatan.</p>
+          <span class="badge badge-soft badge-primary text-xs font-bold tracking-widest uppercase">Layanan Maklon</span>
+          <h2 class="mt-4 text-3xl font-black md:text-4xl lg:text-5xl">
+            Solusi Lengkap untuk<br class="hidden sm:block" /> Brand Kecantikan Anda
+          </h2>
+          <p class="mt-4 text-sm leading-relaxed text-base-content/45 md:text-base">
+            Dari skincare hingga parfum — semua bisa kami produksi dengan standar kualitas tinggi.
+          </p>
         </div>
 
-        <!-- DESKTOP: Interactive Image + Step List -->
-        <div class="process-animate relative mt-14 hidden gap-8 opacity-0 translate-y-6 lg:flex">
-          <!-- Left: Large Featured Image -->
-          <div class="w-[55%] overflow-hidden rounded-2xl shadow-lg">
-            <div class="relative aspect-[4/3] bg-base-200">
-              {processPreviewSteps.map((step, idx) => (
-                <img
-                  id={`process-img-${idx}`}
-                  class="process-feature-img absolute inset-0 h-full w-full object-cover transition-all duration-700 ease-in-out"
-                  class:list={{ "opacity-100 scale-100": idx === 0, "opacity-0 scale-110": idx !== 0 }}
-                  src={processImages[step.imageKey]}
-                  alt={step.title}
-                  loading={idx === 0 ? "eager" : "lazy"}
-                />
-              ))}
-              <!-- Gradient overlay bottom -->
-              <div class="pointer-events-none absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-black/40 to-transparent"></div>
-              <!-- Step badge on image -->
-              <div class="absolute bottom-4 left-4 flex items-center gap-3">
-                <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-white/20 text-white backdrop-blur-md">
-                  <Icon name={processPreviewSteps[0].icon} size={20} />
+        <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {services.map((svc) => {
+            const waService = createWhatsappLink(siteConfig.waNumber, `Halo, saya tertarik dengan layanan ${svc.title}. Bisa info lebih lanjut?`);
+            return (
+              <a href={waService} target="_blank" rel="noopener noreferrer"
+                class="service-card group relative block overflow-hidden rounded-2xl border border-base-200/60 bg-white shadow-sm transition-all duration-500 hover:-translate-y-2 hover:border-primary/20 hover:shadow-xl"
+              >
+                <div class="relative aspect-[4/5] w-full overflow-hidden">
+                  <img src={svc.image} alt={svc.title} class="h-full w-full object-cover transition-all duration-700 ease-out group-hover:scale-105" loading="lazy" />
+                  <!-- Bottom title on idle -->
+                  <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent p-5">
+                    <h3 class="text-lg font-bold text-white drop-shadow-md">{svc.title}</h3>
+                  </div>
+                  <!-- Hover overlay -->
+                  <div class="absolute inset-0 flex flex-col justify-center bg-black/55 p-6 opacity-0 backdrop-blur-[2px] transition-all duration-500 group-hover:opacity-100">
+                    <div class="translate-y-3 transition-transform duration-500 group-hover:translate-y-0">
+                      <p class="text-sm leading-relaxed text-white/90">{svc.desc}</p>
+                      {svc.examples && svc.examples.length > 0 && (
+                        <div class="mt-3 flex flex-wrap gap-1.5">
+                          {svc.examples.split(",").slice(0, 4).map((ex: string) => (
+                            <span class="rounded-lg bg-white/15 px-2.5 py-0.5 text-[11px] font-medium text-white/85 backdrop-blur-sm">{ex.trim()}</span>
+                          ))}
+                        </div>
+                      )}
+                      <span class="mt-5 inline-flex items-center gap-2 rounded-xl bg-white px-5 py-2.5 text-sm font-bold text-primary shadow-lg transition-all duration-300 hover:bg-white/95">
+                        Konsultasi
+                        <Icon name="lucide:arrow-right" class="h-3.5 w-3.5" />
+                      </span>
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <span id="desktop-step-label" class="text-xs font-bold tracking-wider text-white/70">TAHAP 1</span>
-                  <h3 id="desktop-step-title" class="text-lg font-bold text-white">{processPreviewSteps[0].title}</h3>
+              </a>
+            );
+          })}
+        </div>
+
+        <div class="mt-10 text-center">
+          <a href="/layanan" class="btn btn-outline btn-primary">
+            Lihat Semua Layanan
+            <Icon name="lucide:arrow-right" class="h-4 w-4" />
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================== -->
+    <!-- 5. KEUNGGULAN — Icon cards with hover accent                        -->
+    <!-- ================================================================== -->
+    <section id="keunggulan" class="bg-base-100 py-20 md:py-28">
+      <div class="mx-auto max-w-7xl px-4 lg:px-8">
+        <div class="mx-auto max-w-2xl text-center">
+          <span class="badge badge-soft badge-primary text-xs font-bold tracking-widest uppercase">Mengapa Kami</span>
+          <h2 class="mt-4 text-3xl font-black md:text-4xl lg:text-5xl">Keunggulan Aquila Magna</h2>
+          <p class="mt-4 text-sm leading-relaxed text-base-content/45 md:text-base">
+            Setiap detail kami perhatikan — dari formula hingga pengiriman.
+          </p>
+        </div>
+
+        <div class="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {advantages.map((adv) => (
+            <div class="group flex items-start gap-5 rounded-2xl border border-base-200/70 bg-white p-6 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:border-primary/15 hover:shadow-lg">
+              <div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-primary/8 text-primary transition-all duration-500 group-hover:bg-primary group-hover:text-white group-hover:shadow-lg group-hover:shadow-primary/15">
+                <Icon name={adv.icon} class="h-6 w-6" />
+              </div>
+              <div>
+                <h3 class="text-base font-bold transition-colors duration-300 group-hover:text-primary">{adv.title}</h3>
+                <p class="mt-1.5 text-sm leading-relaxed text-base-content/50">{adv.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================== -->
+    <!-- 6. PRODUCT SHOWCASE — Modern hover cards                            -->
+    <!-- ================================================================== -->
+    <section id="produk" class="bg-base-200/50 py-20 md:py-28">
+      <div class="mx-auto max-w-7xl px-4 lg:px-8">
+        <div class="mx-auto max-w-2xl text-center">
+          <span class="badge badge-soft badge-primary text-xs font-bold tracking-widest uppercase">Produk Maklon</span>
+          <h2 class="mt-4 text-3xl font-black md:text-4xl lg:text-5xl">Produk yang Bisa Kami Buat</h2>
+          <p class="mt-4 text-sm leading-relaxed text-base-content/45 md:text-base">
+            Berbagai kategori produk kecantikan siap diproduksi sesuai kebutuhan brand Anda.
+          </p>
+        </div>
+
+        <div class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {topProducts.map((product) => (
+            <div class="group relative overflow-hidden rounded-2xl border border-base-200/70 bg-white shadow-sm transition-all duration-500 hover:-translate-y-2 hover:border-primary/15 hover:shadow-lg">
+              <div class="relative h-48 overflow-hidden">
+                <img src={product.image} alt={product.name} class="h-full w-full object-cover transition-all duration-700 group-hover:scale-110" loading="lazy" />
+                <div class="absolute inset-0 bg-gradient-to-t from-white/90 via-white/20 to-transparent"></div>
+                <span class="absolute left-3 top-3 rounded-lg bg-white/90 px-2.5 py-1 text-[10px] font-bold text-primary shadow-sm backdrop-blur-sm">{product.category}</span>
+              </div>
+              <div class="p-5">
+                <h3 class="text-sm font-bold">{product.name}</h3>
+                <p class="mt-1 text-xs leading-relaxed text-base-content/45 line-clamp-2">{product.desc}</p>
+                <div class="mt-4 flex items-center gap-1 text-[11px] font-semibold text-primary opacity-0 transition-all duration-300 group-hover:opacity-100">
+                  <span>Info Selengkapnya</span>
+                  <Icon name="lucide:arrow-right" class="h-3 w-3" />
                 </div>
               </div>
             </div>
-          </div>
+          ))}
+        </div>
 
-          <!-- Right: Vertical Step List -->
-          <div class="flex w-[45%] flex-col justify-center gap-2">
+        <div class="mt-10 text-center">
+          <a href="/produk-maklon" class="btn btn-outline btn-primary">
+            Lihat Semua Produk
+            <Icon name="lucide:arrow-right" class="h-4 w-4" />
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================== -->
+    <!-- 7. PROCESS — Interactive timeline + mobile carousel                 -->
+    <!-- ================================================================== -->
+    <section id="alur" class="bg-base-100 py-20 md:py-28">
+      <div class="mx-auto max-w-7xl px-4 lg:px-8">
+        <div class="mx-auto max-w-2xl text-center">
+          <span class="badge badge-soft badge-primary text-xs font-bold tracking-widest uppercase">Alur Maklon</span>
+          <h2 class="mt-4 text-3xl font-black md:text-4xl lg:text-5xl">Proses Mudah & Transparan</h2>
+          <p class="mt-4 text-sm leading-relaxed text-base-content/45 md:text-base">
+            Dari konsultasi hingga produk sampai — semua jelas dan terarah.
+          </p>
+        </div>
+
+        <!-- DESKTOP: Interactive timeline -->
+        <div class="mt-14 hidden gap-8 lg:flex">
+          <div class="w-[42%] space-y-2">
             {processPreviewSteps.map((step, idx) => (
               <button
-                class="process-step-btn group flex items-center gap-4 rounded-xl border p-4 text-left transition-all duration-500"
+                class="process-btn group flex w-full items-center gap-4 rounded-xl border p-4 text-left transition-all duration-500"
                 class:list={{
-                  "border-primary/30 bg-primary/[0.04] shadow-md shadow-primary/5": idx === 0,
-                  "border-base-200/70 bg-base-100 shadow-sm hover:border-primary/20 hover:bg-primary/[0.02]": idx !== 0,
+                  "border-primary/30 bg-primary/[0.04] shadow-md": idx === 0,
+                  "border-base-200/70 bg-white shadow-sm hover:border-primary/20 hover:bg-primary/[0.02]": idx !== 0,
                 }}
                 data-step={idx}
-                aria-label={`Tahap ${step.step}: ${step.title}`}
               >
-                <!-- Icon -->
-                <div
-                  class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl transition-all duration-500"
-                  class:list={{
-                    "bg-primary text-white scale-110 shadow-md": idx === 0,
-                    "bg-primary/10 text-primary": idx !== 0,
-                  }}
-                >
-                  <Icon name={step.icon} size={20} />
+                <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary/8 text-primary transition-all duration-500 group-[.border-primary/30]:bg-primary group-[.border-primary/30]:text-white group-[.border-primary/30]:shadow-md group-[.border-primary/30]:shadow-primary/20">
+                  <Icon name={step.icon} class="h-5 w-5" />
                 </div>
-                <!-- Content -->
-                <div class="flex-1 min-w-0">
-                  <span class="text-[11px] font-bold tracking-wider text-primary/60">TAHAP {step.step}</span>
-                  <h3 class="text-sm font-bold transition-colors duration-300">{step.title}</h3>
-                  <p id={`step-desc-${idx}`} class="mt-0.5 text-xs leading-relaxed text-base-content/55 line-clamp-2">{step.desc}</p>
+                <div class="text-left">
+                  <span class="text-[10px] font-bold tracking-[0.15em] text-primary/50 uppercase">Tahap {step.step}</span>
+                  <h3 class="text-sm font-bold">{step.title}</h3>
                 </div>
-                <!-- Active indicator -->
-                <div
-                  class="h-2 w-2 shrink-0 rounded-full transition-all duration-500"
-                  class:list={{ "bg-primary scale-100": idx === 0, "bg-transparent scale-0": idx !== 0 }}
-                ></div>
+                <div class="ml-auto h-2 w-2 shrink-0 rounded-full bg-transparent transition-all duration-500 group-[.border-primary/30]:bg-primary group-[.border-primary/30]:scale-100 scale-0"></div>
               </button>
             ))}
           </div>
-        </div>
 
-        <!-- MOBILE: Interactive Cards Carousel with Images -->
-        <div class="process-animate lg:hidden opacity-0 translate-y-6">
-          <div class="relative mt-10">
-            <!-- Progress bar -->
-            <div class="mb-4 flex items-center gap-2 px-1">
-              <div class="h-1.5 flex-1 overflow-hidden rounded-full bg-base-200">
-                <div id="mobile-progress" class="h-full w-[25%] rounded-full bg-primary transition-all duration-500 ease-out"></div>
-              </div>
-              <span class="text-xs font-semibold text-base-content/50">
-                <span id="mobile-step-current">1</span>/<span>{processSteps.length}</span>
-              </span>
-            </div>
-
-            <!-- Image preview -->
-            <div class="overflow-hidden rounded-2xl shadow-sm">
-              <div class="relative aspect-[16/9] bg-base-200">
+          <div class="w-[58%]">
+            <div class="sticky top-24 overflow-hidden rounded-2xl border border-base-200/60 bg-white shadow-lg">
+              <div class="relative aspect-[4/3] bg-base-200">
                 {processPreviewSteps.map((step, idx) => (
                   <img
-                    id={`mobile-process-img-${idx}`}
-                    class="absolute inset-0 h-full w-full object-cover transition-all duration-600 ease-in-out"
+                    id={`process-img-${idx}`}
+                    class="process-img absolute inset-0 h-full w-full object-cover"
                     class:list={{ "opacity-100 scale-100": idx === 0, "opacity-0 scale-110": idx !== 0 }}
                     src={processImages[step.imageKey]}
                     alt={step.title}
                     loading={idx === 0 ? "eager" : "lazy"}
                   />
                 ))}
-                <!-- Overlay -->
-                <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
-                <div class="absolute bottom-3 left-4 flex items-center gap-2">
-                  <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/20 text-white backdrop-blur-md">
-                    <Icon name={processPreviewSteps[0].icon} size={16} />
+                <div class="pointer-events-none absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-black/50 to-transparent"></div>
+                <div class="absolute bottom-6 left-6 flex items-center gap-3">
+                  <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-white/20 text-white backdrop-blur-md">
+                    <Icon id="process-slide-icon" name={processPreviewSteps[0].icon} class="h-5 w-5" />
                   </div>
-                  <span id="mobile-step-title" class="text-sm font-bold text-white">{processPreviewSteps[0].title}</span>
+                  <div>
+                    <span id="process-step-label" class="text-[10px] font-bold tracking-wider text-white/60 uppercase">Tahap 1</span>
+                    <h3 id="process-step-title" class="text-lg font-bold text-white">{processPreviewSteps[0].title}</h3>
+                  </div>
                 </div>
               </div>
             </div>
+          </div>
+        </div>
 
-            <!-- Cards track -->
+        <!-- MOBILE: Card carousel -->
+        <div class="mt-10 lg:hidden">
+          <div class="relative">
+            <div class="mb-4 flex items-center gap-3">
+              <div class="h-1.5 flex-1 overflow-hidden rounded-full bg-base-200">
+                <div id="mobile-progress" class="h-full rounded-full bg-primary transition-all duration-500 ease-out" style="width: 20%"></div>
+              </div>
+              <span class="text-xs font-bold text-base-content/40">
+                <span id="mobile-current">1</span>/<span>{processPreviewSteps.length}</span>
+              </span>
+            </div>
+            <div class="overflow-hidden rounded-2xl shadow-md">
+              <div class="relative aspect-[16/9] bg-base-200">
+                {processPreviewSteps.map((step, idx) => (
+                  <img
+                    id={`mobile-img-${idx}`}
+                    class="absolute inset-0 h-full w-full object-cover transition-all duration-600 ease-in-out"
+                    class:list={{ "opacity-100 scale-100": idx === 0, "opacity-0 scale-110": idx !== 0 }}
+                    src={processImages[step.imageKey]}
+                    alt={step.title}
+                    loading="lazy"
+                  />
+                ))}
+                <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+                <div class="absolute bottom-4 left-4 flex items-center gap-2">
+                  <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/20 text-white backdrop-blur-md">
+                    <Icon id="mobile-slide-icon" name={processPreviewSteps[0].icon} class="h-4 w-4" />
+                  </div>
+                  <span id="mobile-title" class="text-sm font-bold text-white">{processPreviewSteps[0].title}</span>
+                </div>
+              </div>
+            </div>
             <div class="mt-3 overflow-hidden rounded-2xl">
-              <div id="mobile-carousel-track" class="flex transition-transform duration-500 ease-out">
+              <div id="mobile-track" class="flex transition-transform duration-500 ease-out">
                 {processPreviewSteps.map((step) => (
-                  <div class="min-w-0 w-full shrink-0 px-0.5">
-                    <div class="rounded-2xl border border-base-200/70 bg-base-100 p-4 shadow-sm">
+                  <div class="w-full shrink-0 px-0.5">
+                    <div class="rounded-2xl border border-base-200 bg-white p-4 shadow-sm">
                       <div class="flex items-center gap-3">
-                        <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                          <Icon name={step.icon} size={22} />
+                        <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                          <Icon name={step.icon} class="h-5 w-5" />
                         </div>
                         <div>
-                          <span class="text-[11px] font-bold tracking-wider text-primary/60">TAHAP {step.step}</span>
-                          <h3 class="text-base font-bold">{step.title}</h3>
+                          <span class="text-[10px] font-bold tracking-wider text-primary/50">TAHAP {step.step}</span>
+                          <h3 class="text-sm font-bold">{step.title}</h3>
                         </div>
                       </div>
                       <p class="mt-2 text-sm leading-relaxed text-base-content/60">{step.desc}</p>
@@ -331,63 +445,171 @@ const heroSlides = [
                 ))}
               </div>
             </div>
-
-            <!-- Navigation -->
             <div class="mt-4 flex items-center justify-between">
-              <button id="mobile-prev" class="btn btn-circle btn-soft btn-sm" aria-label="Sebelumnya">
-                <Icon name="lucide:chevron-left" size={16} />
+              <button id="mobile-prev" class="btn btn-circle btn-ghost btn-sm" aria-label="Sebelumnya">
+                <Icon name="lucide:chevron-left" class="h-4 w-4" />
               </button>
-
-              <div class="flex items-center gap-1.5">
+              <div class="flex gap-1.5">
                 {processPreviewSteps.map((_, i) => (
-                  <button
-                    class={`mobile-dot h-1.5 rounded-full transition-all duration-400 ${i === 0 ? "w-6 bg-primary" : "w-1.5 bg-base-300"}`}
-                    data-mobile-dot={i}
-                    aria-label={`Tahap ${i + 1}`}
-                  ></button>
+                  <button class={`mobile-dot rounded-full transition-all duration-400 ${i === 0 ? "h-1.5 w-6 bg-primary" : "h-1.5 w-1.5 bg-base-300"}`} data-dot={i} aria-label={`Tahap ${i + 1}`}></button>
                 ))}
               </div>
-
-              <button id="mobile-next" class="btn btn-circle btn-soft btn-sm" aria-label="Selanjutnya">
-                <Icon name="lucide:chevron-right" size={16} />
+              <button id="mobile-next" class="btn btn-circle btn-ghost btn-sm" aria-label="Selanjutnya">
+                <Icon name="lucide:chevron-right" class="h-4 w-4" />
               </button>
             </div>
           </div>
         </div>
 
-        <!-- CTA -->
-        <div class="process-animate mt-12 text-center opacity-0 translate-y-4">
-          <a href="/outsourcing-flow" class="group inline-flex h-11 items-center gap-2 rounded-full bg-primary px-8 text-sm font-semibold text-white shadow-md shadow-primary/15 transition-all duration-300 hover:scale-105 hover:shadow-lg">
-            Lihat 4 Tahap Lengkap
-            <Icon name="lucide:arrow-right" class="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" />
+        <div class="mt-10 text-center">
+          <a href="/alur-maklon" class="btn btn-primary">
+            Lihat Alur Maklon Lengkap
+            <Icon name="lucide:arrow-right" class="h-4 w-4" />
           </a>
         </div>
       </div>
     </section>
 
     <!-- ================================================================== -->
-    <!-- 6. TESTIMONIAL                                                      -->
+    <!-- 8. FACTORY GALLERY — Image cards                                    -->
     <!-- ================================================================== -->
-    <section class="bg-base-100 py-16 md:py-20">
+    <section class="bg-base-200/50 py-20 md:py-28">
       <div class="mx-auto max-w-7xl px-4 lg:px-8">
         <div class="mx-auto max-w-2xl text-center">
-          <span class="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/[0.04] px-4 py-1 text-[11px] font-semibold tracking-[0.12em] text-primary">TESTIMONIAL</span>
-          <h2 class="mt-3 text-3xl font-bold md:text-4xl">Dipercaya Brand Partner</h2>
-          <p class="mt-3 text-sm text-base-content/55">Mereka sudah merasakan kemudahan bermitra dengan kami.</p>
+          <span class="badge badge-soft badge-primary text-xs font-bold tracking-widest uppercase">Fasilitas</span>
+          <h2 class="mt-4 text-3xl font-black md:text-4xl lg:text-5xl">Pabrik Modern & Terstandar</h2>
+          <p class="mt-4 text-sm leading-relaxed text-base-content/45 md:text-base">
+            Didukung fasilitas produksi berstandar CPKB dengan teknologi terkini.
+          </p>
         </div>
 
-        <div class="mt-10 overflow-hidden">
-          <div id="testimonial-track" class="flex gap-4 transition-transform duration-600 ease-in-out">
+        <div class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {galleryItems.map((item) => (
+            <div class="group relative overflow-hidden rounded-2xl border border-base-200/70 bg-white shadow-sm transition-all duration-500 hover:-translate-y-1.5 hover:border-primary/15 hover:shadow-lg">
+              <div class="relative h-52 overflow-hidden">
+                <img src={item.image} alt={item.label} class="h-full w-full object-cover transition-all duration-700 group-hover:scale-110" loading="lazy" />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent"></div>
+                <div class="absolute bottom-4 left-4 flex items-center gap-2.5">
+                  <div class="flex h-9 w-9 items-center justify-center rounded-lg bg-white/15 text-white backdrop-blur-sm">
+                    <Icon name={item.icon} class="h-4 w-4" />
+                  </div>
+                  <span class="text-sm font-bold text-white drop-shadow-md">{item.label}</span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================== -->
+    <!-- 9. COMPARISON — Table                                               -->
+    <!-- ================================================================== -->
+    <section class="bg-base-100 py-20 md:py-28">
+      <div class="mx-auto max-w-4xl px-4 lg:px-8">
+        <div class="mx-auto max-w-2xl text-center">
+          <span class="badge badge-soft badge-primary text-xs font-bold tracking-widest uppercase">Perbandingan</span>
+          <h2 class="mt-4 text-3xl font-black md:text-4xl lg:text-5xl">Kenapa Harus Aquila Magna?</h2>
+          <p class="mt-4 text-sm leading-relaxed text-base-content/45 md:text-base">
+            Kami hadir sebagai solusi maklon yang benar-benar memudahkan brand owner.
+          </p>
+        </div>
+
+        <div class="mt-12 overflow-hidden rounded-2xl border border-base-200/70 bg-white shadow-sm">
+          <!-- Header -->
+          <div class="flex border-b border-base-200 bg-base-200/50 px-6 py-4">
+            <div class="w-[38%] text-xs font-bold tracking-[0.12em] text-base-content/35 uppercase">Aspek</div>
+            <div class="w-[31%] text-xs font-bold tracking-[0.12em] text-primary uppercase">Aquila Magna</div>
+            <div class="w-[31%] text-xs font-bold tracking-[0.12em] text-base-content/25 uppercase">Maklon Biasa</div>
+          </div>
+          <!-- Rows -->
+          {comparisons.map((row) => (
+            <div class="flex items-center border-b border-base-100 px-6 py-4 transition-colors duration-200 hover:bg-base-200/30">
+              <div class="flex w-[38%] items-center gap-2">
+                <span class="text-sm font-semibold text-base-content/60">{row.aspect}</span>
+              </div>
+              <div class="flex w-[31%] items-center gap-2">
+                <Icon name="lucide:check-circle" class="h-4 w-4 shrink-0 text-primary" />
+                <span class="text-sm font-bold text-primary/80">{row.us}</span>
+              </div>
+              <div class="flex w-[31%] items-center gap-2">
+                <Icon name="lucide:minus-circle" class="h-4 w-4 shrink-0 text-base-content/15" />
+                <span class="text-sm text-base-content/35">{row.them}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================== -->
+    <!-- 10. SERTIFIKASI & LEGALITAS — Trust badges                          -->
+    <!-- ================================================================== -->
+    <section class="bg-base-200/50 py-20 md:py-28">
+      <div class="mx-auto max-w-7xl px-4 lg:px-8">
+        <div class="mx-auto max-w-2xl text-center">
+          <span class="badge badge-soft badge-primary text-xs font-bold tracking-widest uppercase">Sertifikasi</span>
+          <h2 class="mt-4 text-3xl font-black md:text-4xl lg:text-5xl">Legalitas & Sertifikasi</h2>
+          <p class="mt-4 text-sm leading-relaxed text-base-content/45 md:text-base">
+            Keamanan dan legalitas produk Anda terjamin — kami uruskan semua perizinannya.
+          </p>
+        </div>
+
+        <div class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {certifications.slice(0, 4).map((cert) => (
+            <div class="group relative overflow-hidden rounded-2xl border border-base-200/70 bg-white shadow-sm transition-all duration-500 hover:-translate-y-1.5 hover:border-primary/15 hover:shadow-lg">
+              <div class="flex flex-col items-center p-6 text-center">
+                <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/8 text-primary transition-all duration-500 group-hover:scale-110 group-hover:bg-primary group-hover:text-white group-hover:shadow-lg group-hover:shadow-primary/15">
+                  <Icon name={cert.icon} class="h-7 w-7" />
+                </div>
+                <h3 class="mt-4 text-base font-bold transition-colors duration-300 group-hover:text-primary">{cert.name}</h3>
+                <p class="mt-2 text-xs leading-relaxed text-base-content/45 line-clamp-3">{cert.desc}</p>
+                <span class="mt-3 inline-block rounded-full border border-base-200 px-3 py-0.5 text-[10px] font-bold tracking-wider text-base-content/30 uppercase">{cert.year}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div class="mt-10 text-center">
+          <a href="/sertifikasi" class="btn btn-outline btn-primary">
+            Lihat Semua Sertifikasi
+            <Icon name="lucide:arrow-right" class="h-4 w-4" />
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================== -->
+    <!-- 11. TESTIMONIAL — Card carousel                                     -->
+    <!-- ================================================================== -->
+    <section class="bg-base-200/50 py-20 md:py-28">
+      <div class="mx-auto max-w-7xl px-4 lg:px-8">
+        <div class="mx-auto max-w-2xl text-center">
+          <span class="badge badge-soft badge-primary text-xs font-bold tracking-widest uppercase">Testimonial</span>
+          <h2 class="mt-4 text-3xl font-black md:text-4xl lg:text-5xl">Dipercaya Brand Partner</h2>
+          <p class="mt-4 text-sm leading-relaxed text-base-content/45 md:text-base">
+            Mereka sudah merasakan kemudahan bermitra dengan kami.
+          </p>
+        </div>
+
+        <div class="mt-12 overflow-hidden">
+          <div id="testi-track" class="flex gap-5 transition-transform duration-600 ease-in-out">
             {testimonials.map((item) => (
-              <div class="testimonial-slide w-full shrink-0 md:w-[calc(50%-8px)] lg:w-[calc(33.333%-11px)]">
-                <div class="h-full rounded-2xl border border-base-200/80 bg-base-100 p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary/15 hover:shadow-md">
-                  <Icon name="lucide:quote" class="mb-3 h-6 w-6 text-primary/15" />
-                  <p class="text-sm leading-relaxed text-base-content/65 italic">"{item.text}"</p>
-                  <div class="mt-4 flex items-center gap-3 border-t border-base-200 pt-4">
-                    <div class="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-sm font-bold text-primary">{item.name.charAt(0)}</div>
+              <div class="testi-slide w-full shrink-0 md:w-[calc(50%-10px)] lg:w-[calc(33.333%-14px)]">
+                <div class="flex h-full flex-col rounded-2xl border border-base-200/60 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary/15 hover:shadow-md">
+                  <div class="relative mt-3 flex-1">
+                    <Icon name="lucide:quote" class="absolute -left-1 -top-1 h-6 w-6 text-primary/10" />
+                    <p class="relative pl-4 text-sm leading-relaxed text-base-content/60 italic">"{item.text}"</p>
+                  </div>
+                  <div class="mt-5 flex items-center gap-3 border-t border-base-100 pt-4">
+                    <div class="avatar placeholder">
+                      <div class="w-10 rounded-full bg-primary/10 text-primary">
+                        <span class="text-sm font-bold">{item.name.charAt(0)}</span>
+                      </div>
+                    </div>
                     <div>
-                      <p class="text-sm font-semibold">{item.name}</p>
-                      <p class="text-xs text-primary/70">{item.brand}</p>
+                      <p class="text-sm font-bold">{item.name}</p>
+                      <p class="text-xs text-primary/50">{item.brand}</p>
                     </div>
                   </div>
                 </div>
@@ -395,21 +617,15 @@ const heroSlides = [
             ))}
           </div>
 
-          <!-- Carousel controls -->
           <div class="mt-6 flex items-center justify-center gap-3">
-            <button id="testi-prev" class="flex h-9 w-9 items-center justify-center rounded-full border border-base-200 bg-base-100 text-base-content/40 shadow-sm transition-all duration-300 hover:border-primary/30 hover:text-primary" aria-label="Sebelumnya">
-              <Icon name="lucide:chevron-left" class="h-3.5 w-3.5" />
+            <button id="testi-prev" class="btn btn-circle btn-ghost btn-sm" aria-label="Sebelumnya">
+              <Icon name="lucide:chevron-left" class="h-4 w-4" />
             </button>
             {testimonials.map((_, idx) => (
-              <button
-                id={`testi-dot-${idx}`}
-                class={`testi-dot rounded-full transition-all duration-400 ${idx === 0 ? "h-2 w-7 bg-primary" : "h-2 w-2 bg-base-300"}`}
-                data-index={idx}
-                aria-label={`Testimonial ${idx + 1}`}
-              ></button>
+              <button id={`testi-dot-${idx}`} class={`testi-dot rounded-full transition-all duration-400 ${idx === 0 ? "h-2 w-7 bg-primary" : "h-2 w-2 bg-base-300"}`} data-idx={idx} aria-label={`Testimonial ${idx + 1}`}></button>
             ))}
-            <button id="testi-next" class="flex h-9 w-9 items-center justify-center rounded-full border border-base-200 bg-base-100 text-base-content/40 shadow-sm transition-all duration-300 hover:border-primary/30 hover:text-primary" aria-label="Selanjutnya">
-              <Icon name="lucide:chevron-right" class="h-3.5 w-3.5" />
+            <button id="testi-next" class="btn btn-circle btn-ghost btn-sm" aria-label="Selanjutnya">
+              <Icon name="lucide:chevron-right" class="h-4 w-4" />
             </button>
           </div>
         </div>
@@ -417,348 +633,350 @@ const heroSlides = [
     </section>
 
     <!-- ================================================================== -->
-    <!-- 7. CTA FINAL                                                        -->
+    <!-- 12. FAQ — Accordion                                                 -->
     <!-- ================================================================== -->
-    <section class="relative overflow-hidden bg-gradient-to-br from-primary to-emerald-900 py-16 md:py-20">
-      <div class="pointer-events-none absolute -right-20 -top-20 h-[400px] w-[400px] rounded-full bg-white/[0.03] blur-3xl"></div>
-      <div class="relative z-10 mx-auto max-w-3xl px-4 text-center lg:px-8">
-        <h2 class="text-3xl font-bold text-white md:text-4xl">Siap Bangun Brand Kamu?</h2>
-        <p class="mx-auto mt-4 max-w-xl text-sm text-white/65 md:text-base">Konsultasi gratis sekarang. Tim kami siap bantu dari awal hingga produk siap jual.</p>
-        <div class="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-          <a href={waLink} target="_blank" rel="noopener noreferrer" class="group inline-flex h-12 items-center gap-2 rounded-full bg-white px-8 text-sm font-semibold text-primary shadow-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl">
-            <Icon name="mdi:whatsapp" class="h-4 w-4" />
-            Konsultasi via WhatsApp
-          </a>
-          <a href="/company" class="group inline-flex h-12 items-center gap-2 rounded-full border border-white/20 bg-white/[0.06] px-8 text-sm font-medium text-white backdrop-blur-xl transition-all duration-300 hover:border-white/40 hover:bg-white/[0.12]">
-            Tentang Kami
-            <Icon name="lucide:arrow-right" class="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" />
-          </a>
+    <section class="bg-base-100 py-20 md:py-28">
+      <div class="mx-auto max-w-3xl px-4 lg:px-8">
+        <div class="mx-auto max-w-2xl text-center">
+          <span class="badge badge-soft badge-primary text-xs font-bold tracking-widest uppercase">FAQ</span>
+          <h2 class="mt-4 text-3xl font-black md:text-4xl lg:text-5xl">Pertanyaan Umum</h2>
+        </div>
+
+        <div class="mt-10 space-y-2">
+          {faqs.slice(0, 6).map((faq, idx) => (
+            <div class="faq-item rounded-2xl border border-base-200/60 bg-white shadow-sm transition-all duration-300 hover:border-primary/10">
+              <button
+                class="faq-trigger flex w-full items-center justify-between px-6 py-4 text-left"
+                aria-expanded={idx === 0 ? "true" : "false"}
+              >
+                <span class="text-sm font-bold text-base-content/80 pr-4">{faq.q}</span>
+                <Icon name="lucide:chevron-down" class="faq-icon h-4 w-4 shrink-0 text-base-content/25 transition-transform duration-300" />
+              </button>
+              <div class="faq-panel overflow-hidden transition-all duration-400" style={idx === 0 ? "max-height: 500px; opacity: 1;" : "max-height: 0; opacity: 0;"}>
+                <p class="px-6 pb-5 pt-0 text-sm leading-relaxed text-base-content/55">{faq.a}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>
+
+    <!-- ================================================================== -->
+    <!-- 13. FINAL CTA — Full-width banner                                   -->
+    <!-- ================================================================== -->
+    <section class="relative overflow-hidden py-24 md:py-32">
+      <div class="absolute inset-0 bg-gradient-to-br from-[#0a1a15] via-primary to-emerald-950"></div>
+      <div class="pointer-events-none absolute inset-0 opacity-[0.03]" style="background-image: radial-gradient(circle, white 1px, transparent 1px); background-size: 40px 40px;"></div>
+
+      <div class="relative mx-auto max-w-3xl px-4 text-center lg:px-8">
+        <div class="mx-auto mb-6 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/8 px-5 py-2 backdrop-blur-xl">
+          <span class="h-2 w-2 animate-pulse rounded-full bg-amber-400"></span>
+          <span class="text-xs font-bold tracking-[0.15em] text-white/70 uppercase">Konsultasi Gratis — Tanpa Komitmen</span>
+        </div>
+
+        <h2 class="text-4xl font-black text-white md:text-5xl lg:text-6xl">
+          Saatnya Wujudkan Brand Impian Anda
+        </h2>
+        <p class="mx-auto mt-5 max-w-xl text-base leading-relaxed text-white/55 md:text-lg">
+          Mulai dari <span class="font-semibold text-white/80">konsultasi gratis</span> — kami siap bantu dari nol sampai produk jadi.
+        </p>
+
+        <div class="mt-9 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+          <a href={waKonsultasi} target="_blank" rel="noopener noreferrer"
+            class="group relative inline-flex h-14 items-center gap-2.5 overflow-hidden rounded-xl bg-white px-10 text-base font-bold text-primary shadow-2xl shadow-black/20 transition-all duration-500 hover:scale-105">
+            <Icon name="mdi:whatsapp" class="relative z-10 h-5 w-5" />
+            <span class="relative z-10">Konsultasi via WhatsApp</span>
+            <Icon name="lucide:arrow-right" class="relative z-10 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+          </a>
+          <a href="/tentang-kami"
+            class="inline-flex h-14 items-center gap-2 rounded-xl border-2 border-white/20 bg-white/5 px-10 text-base font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:border-white/35 hover:bg-white/8">
+            Pelajari Lebih Lanjut
+          </a>
+        </div>
+
+        <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+          {["BPOM", "Halal MUI", "500+ Formula", "Respon < 1 jam"].map((b) => (
+            <span class="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/6 px-4 py-2 text-xs font-medium text-white/60 backdrop-blur-sm">
+              <Icon name="lucide:shield-check" class="h-3.5 w-3.5 text-emerald-300/50" />
+              {b}
+            </span>
+          ))}
+        </div>
+      </div>
+    </section>
+
   </main>
 </MainLayout>
 
+<!-- ==================================================================== -->
+<!-- CLIENT-SIDE SCRIPTS                                                  -->
+<!-- ==================================================================== -->
 <script>
   // ====================================================================
-  // PROCESS STEPS DATA (inlined for client-side)
+  // DATA
   // ====================================================================
-  type ProcessImageKey = "konsultasi" | "riset" | "sample" | "revisi" | "desain" | "legalitas" | "produksi" | "qc" | "pengiriman";
-  interface ProcessStep {
-    step: number;
-    title: string;
-    icon: string;
-    desc: string;
-    imageKey: ProcessImageKey;
-  }
+  const heroSlidesData = [
+    { label: "Laboratorium Modern", subtitle: "Formulasi presisi dengan teknologi terkini" },
+    { label: "Produksi Berkualitas", subtitle: "Standar CPKB & GMP terjaga ketat" },
+    { label: "Siap Dikemas & Kirim", subtitle: "Produk jadi langsung siap distribusi" },
+    { label: "Riset & Inovasi", subtitle: "500+ formula siap dikustomisasi" },
+  ];
 
-  const processSteps: ProcessStep[] = [
-  { step: 1, title: "Konsultasi Konsep", icon: "lucide:message-circle", desc: "Diskusikan ide produk, konsep, dan target pasar yang diinginkan secara gratis.", imageKey: "konsultasi" },
-  { step: 2, title: "Riset & Formulasi", icon: "lucide:flask-conical", desc: "Tim R&D melakukan riset dan mengembangkan formula sesuai kebutuhan dan tren pasar.", imageKey: "riset" },
-  { step: 3, title: "Pembuatan Sample", icon: "lucide:beaker", desc: "Sample produk dibuat untuk evaluasi dan persetujuan sebelum produksi massal.", imageKey: "sample" },
-  { step: 4, title: "Revisi Sample", icon: "lucide:refresh-cw", desc: "Sample direvisi hingga sesuai dengan keinginan brand Anda.", imageKey: "revisi" },
+  const processStepsData = [
+    { step: 1, title: "Konsultasi Konsep", icon: "lucide:message-circle", desc: "Diskusikan ide produk, konsep, dan target pasar secara gratis bersama tim konsultan kami." },
+    { step: 2, title: "Riset & Formulasi", icon: "lucide:flask-conical", desc: "Tim R&D melakukan riset dan mengembangkan formula custom sesuai kebutuhan brand Anda." },
+    { step: 3, title: "Pembuatan Sample", icon: "lucide:beaker", desc: "Sample produk dibuat untuk Anda evaluasi sebelum masuk ke tahap produksi massal." },
+    { step: 4, title: "Revisi Sample", icon: "lucide:refresh-cw", desc: "Revisi sample hingga sesuai dengan ekspektasi dan standar kualitas brand Anda." },
+    { step: 5, title: "Desain & Legalitas", icon: "lucide:file-text", desc: "Desain kemasan, pengurusan BPOM, Halal, dan HKI — semua kami bantu urus." },
   ];
 
   // ====================================================================
-  // HERO SLIDER — auto + dots + swipe
+  // 1. HERO SLIDER
   // ====================================================================
-  const heroData = [
-    { badge: "PARTNER MAKLON PROFESIONAL", title: "Wujudkan Brand Kecantikan Sendiri", desc: "Kami bantu proses maklon dari konsultasi, formulasi, produksi, legalitas, hingga produk siap jual." },
-    { badge: "FORMULA CUSTOM & INOVATIF", title: "Riset & Formulasi oleh Tim Ahli", desc: "Tim R&D berpengalaman menciptakan formula eksklusif sesuai tren dan kebutuhan brand Anda." },
-    { badge: "BPOM, HALAL & SIAP JUAL", title: "Legalitas Lengkap, Produk Siap Dipasarkan", desc: "BPOM, Halal, HKI — semua diurus. Anda tinggal fokus jualan." },
-  ];
-
-  let currentHero = 0;
-  const totalHero = heroData.length;
-  let heroInterval: ReturnType<typeof setInterval> | undefined;
+  let heroIdx = 0;
+  const heroTotal = heroSlidesData.length;
+  let heroTimer: ReturnType<typeof setInterval> | undefined;
 
   function goHero(idx: number) {
-    currentHero = idx;
-    const d = heroData[idx];
-
-    for (let i = 0; i < totalHero; i++) {
-      const bg = document.getElementById(`hero-slide-bg-${i}`);
-      if (!bg) continue;
-      if (i === idx) { bg.classList.add("opacity-100"); bg.classList.remove("opacity-0", "scale-105"); }
-      else { bg.classList.remove("opacity-100"); bg.classList.add("opacity-0", "scale-105"); }
-    }
-
-    const badgeEl = document.getElementById("hero-badge");
-    if (badgeEl) badgeEl.textContent = d.badge;
-    const titleEl = document.getElementById("hero-title");
-    if (titleEl) titleEl.textContent = d.title;
-    const descEl = document.getElementById("hero-desc");
-    if (descEl) descEl.textContent = d.desc;
-
-    document.querySelectorAll<HTMLElement>(".hero-dot").forEach((dot, i) => {
-      if (i === idx) { dot.className = "hero-dot h-2 w-8 rounded-full bg-white transition-all duration-500"; }
-      else { dot.className = "hero-dot h-2 w-2 rounded-full bg-white/30 transition-all duration-500"; }
+    heroIdx = idx;
+    document.querySelectorAll<HTMLElement>(".hero-slide").forEach((s, i) => {
+      s.style.opacity = i === idx ? "1" : "0";
+    });
+    document.querySelectorAll<HTMLElement>(".hero-dot").forEach((d, i) => {
+      if (i === idx) { d.className = "hero-dot h-1.5 w-8 rounded-full bg-white transition-all duration-500"; }
+      else { d.className = "hero-dot h-1.5 w-1.5 rounded-full bg-white/30 hover:bg-white/50 transition-all duration-500"; }
     });
   }
 
-  function nextHero() { goHero((currentHero + 1) % totalHero); }
-  function startHero() { stopHero(); heroInterval = setInterval(nextHero, 5000); }
-  function stopHero() { if (heroInterval) clearInterval(heroInterval); }
+  function startHero() { stopHero(); heroTimer = setInterval(() => goHero((heroIdx + 1) % heroTotal), 5000); }
+  function stopHero() { if (heroTimer) clearInterval(heroTimer); }
 
-  document.querySelectorAll<HTMLElement>(".hero-dot").forEach((dot, i) => {
-    dot.addEventListener("click", () => { goHero(i); startHero(); });
+  document.querySelectorAll<HTMLElement>(".hero-dot").forEach((dot) => {
+    dot.addEventListener("click", () => {
+      const idx = parseInt(dot.getAttribute("data-slide") || "0");
+      goHero(idx);
+      startHero();
+    });
   });
-
-  const heroSec = document.getElementById("hero");
-  let tx = 0;
-  if (heroSec) {
-    heroSec.addEventListener("touchstart", e => { tx = e.changedTouches[0].screenX; }, { passive: true });
-    heroSec.addEventListener("touchend", e => {
-      const diff = tx - e.changedTouches[0].screenX;
-      if (Math.abs(diff) > 50) {
-        if (diff > 0) goHero((currentHero + 1) % totalHero);
-        else goHero((currentHero - 1 + totalHero) % totalHero);
-        startHero();
-      }
-    }, { passive: true });
-  }
 
   startHero();
 
   // ====================================================================
-  // PROCESS SECTION — Interactive Image + Step List
+  // 2. STATS COUNTER (Intersection Observer)
   // ====================================================================
-  const processSection = document.getElementById("alur-maklon");
+  const statCounters = document.querySelectorAll<HTMLElement>(".stat-counter");
+  let countersAnimated = false;
 
-  // Intersection Observer for scroll-triggered animation
-  if (processSection) {
-    document.querySelectorAll<HTMLElement>(".process-animate").forEach(el => {
-      const obs = new IntersectionObserver(([e]) => {
-        if (e.isIntersecting) {
-          e.target.classList.add("opacity-100", "translate-y-0");
-          e.target.classList.remove("opacity-0", "translate-y-4", "translate-y-6");
-          obs.disconnect();
-        }
-      }, { threshold: 0.3 });
-      obs.observe(el);
+  function animateCounter(el: HTMLElement) {
+    const target = parseInt(el.dataset.target || "0");
+    const duration = 2000;
+    const start = performance.now();
+    function update(now: number) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.floor(eased * target).toString();
+      if (progress < 1) requestAnimationFrame(update);
+      else el.textContent = target.toString();
+    }
+    requestAnimationFrame(update);
+  }
+
+  const statsObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !countersAnimated) {
+        countersAnimated = true;
+        statCounters.forEach(c => animateCounter(c));
+        statsObserver.disconnect();
+      }
+    });
+  }, { threshold: 0.3 });
+
+  if (statCounters.length > 0) statsObserver.observe(statCounters[0]);
+
+  // ====================================================================
+  // 3. FAQ ACCORDION
+  // ====================================================================
+  document.querySelectorAll<HTMLElement>(".faq-trigger").forEach(trigger => {
+    trigger.addEventListener("click", () => {
+      const panel = trigger.nextElementSibling as HTMLElement;
+      const icon = trigger.querySelector(".faq-icon") as HTMLElement;
+      const isOpen = trigger.getAttribute("aria-expanded") === "true";
+      // Close all
+      document.querySelectorAll<HTMLElement>(".faq-trigger").forEach(t => {
+        t.setAttribute("aria-expanded", "false");
+        const p = t.nextElementSibling as HTMLElement;
+        const i = t.querySelector(".faq-icon") as HTMLElement;
+        if (p) { p.style.maxHeight = "0"; p.style.opacity = "0"; }
+        if (i) i.style.transform = "rotate(0deg)";
+      });
+      if (!isOpen) {
+        trigger.setAttribute("aria-expanded", "true");
+        if (panel) { panel.style.maxHeight = panel.scrollHeight + "px"; panel.style.opacity = "1"; }
+        if (icon) icon.style.transform = "rotate(180deg)";
+      }
+    });
+  });
+
+  // ====================================================================
+  // 4. PROCESS — Desktop Interactive Timeline
+  // ====================================================================
+  const processLen = processStepsData.length;
+  let activeProcess = 0;
+  let processTimer: ReturnType<typeof setInterval> | undefined;
+
+  function goProcess(idx: number) {
+    if (idx < 0 || idx >= processLen || idx === activeProcess) return;
+    activeProcess = idx;
+    const step = processStepsData[idx];
+
+    document.querySelectorAll<HTMLElement>(".process-img").forEach((img, i) => {
+      if (i === idx) { img.classList.add("opacity-100", "scale-100"); img.classList.remove("opacity-0", "scale-110"); }
+      else { img.classList.remove("opacity-100", "scale-100"); img.classList.add("opacity-0", "scale-110"); }
+    });
+
+    const labelEl = document.getElementById("process-step-label");
+    const titleEl = document.getElementById("process-step-title");
+    const iconEl = document.getElementById("process-slide-icon");
+    if (labelEl) labelEl.textContent = `Tahap ${step.step}`;
+    if (titleEl) titleEl.textContent = step.title;
+    if (iconEl) iconEl.setAttribute("name", step.icon);
+
+    document.querySelectorAll<HTMLElement>(".process-btn").forEach((btn, i) => {
+      btn.classList.remove("border-primary/30", "bg-primary/[0.04]", "shadow-md", "border-base-200/70", "bg-white", "shadow-sm");
+      if (i === idx) {
+        btn.classList.add("border-primary/30", "bg-primary/[0.04]", "shadow-md");
+      } else {
+        btn.classList.add("border-base-200/70", "bg-white", "shadow-sm");
+      }
     });
   }
 
-  // Desktop: Interactive Step Selection
-  if (window.innerWidth >= 1024) {
-    const totalSteps = processSteps.length;
-    let activeDesktop = 0;
+  function startProcessAuto() { stopProcessAuto(); processTimer = setInterval(() => goProcess((activeProcess + 1) % processLen), 4000); }
+  function stopProcessAuto() { if (processTimer) { clearInterval(processTimer); processTimer = undefined; } }
 
-    function goToStep(idx: number) {
-      if (idx < 0 || idx >= totalSteps || idx === activeDesktop) return;
-      activeDesktop = idx;
-
-      // 1. Update featured image
-      document.querySelectorAll<HTMLElement>(".process-feature-img").forEach((img, i) => {
-        if (i === idx) {
-          img.classList.add("opacity-100", "scale-100");
-          img.classList.remove("opacity-0", "scale-110");
-        } else {
-          img.classList.remove("opacity-100", "scale-100");
-          img.classList.add("opacity-0", "scale-110");
-        }
-      });
-
-      // 2. Update image badge
-      const step = processSteps[idx];
-      const labelEl = document.getElementById("desktop-step-label");
-      const titleEl = document.getElementById("desktop-step-title");
-      if (labelEl) labelEl.textContent = `TAHAP ${step.step}`;
-      if (titleEl) titleEl.textContent = step.title;
-
-      // 3. Update step buttons
-      document.querySelectorAll<HTMLElement>(".process-step-btn").forEach((btn, i) => {
-        if (i === idx) {
-          btn.classList.add("border-primary/30", "bg-primary/[0.04]", "shadow-md", "shadow-primary/5");
-          btn.classList.remove("border-base-200/70", "bg-base-100", "shadow-sm");
-          // icon
-          const icon = btn.querySelector(".rounded-xl");
-          if (icon) {
-            icon.classList.add("bg-primary", "text-white", "scale-110", "shadow-md");
-            icon.classList.remove("bg-primary/10", "text-primary");
-          }
-          // dot
-          const dot = btn.querySelector(".rounded-full");
-          if (dot) {
-            dot.classList.add("bg-primary", "scale-100");
-            dot.classList.remove("bg-transparent", "scale-0");
-          }
-        } else {
-          btn.classList.remove("border-primary/30", "bg-primary/[0.04]", "shadow-md", "shadow-primary/5");
-          btn.classList.add("border-base-200/70", "bg-base-100", "shadow-sm");
-          const icon = btn.querySelector(".rounded-xl");
-          if (icon) {
-            icon.classList.remove("bg-primary", "text-white", "scale-110", "shadow-md");
-            icon.classList.add("bg-primary/10", "text-primary");
-          }
-          const dot = btn.querySelector(".rounded-full");
-          if (dot) {
-            dot.classList.remove("bg-primary", "scale-100");
-            dot.classList.add("bg-transparent", "scale-0");
-          }
-        }
-      });
-    }
-
-    // Click on step buttons
-    document.querySelectorAll<HTMLElement>(".process-step-btn").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const idx = parseInt(btn.getAttribute("data-step") || "0");
-        goToStep(idx);
-      });
+  document.querySelectorAll<HTMLElement>(".process-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      goProcess(parseInt(btn.getAttribute("data-step") || "0"));
+      startProcessAuto();
     });
+  });
 
-    // Auto-advance every 4s, pause on hover
-    let autoTimer: ReturnType<typeof setInterval> | undefined;
-    function startAutoAdvance() {
-      stopAutoAdvance();
-      autoTimer = setInterval(() => {
-        const next = (activeDesktop + 1) % totalSteps;
-        goToStep(next);
-      }, 4000);
-    }
-    function stopAutoAdvance() {
-      if (autoTimer) { clearInterval(autoTimer); autoTimer = undefined; }
-    }
-
-    const processContainer = document.querySelector(".lg\\:flex");
-    if (processContainer) {
-      processContainer.addEventListener("mouseenter", stopAutoAdvance);
-      processContainer.addEventListener("mouseleave", startAutoAdvance);
-    }
-
-    startAutoAdvance();
+  const processContainer = document.querySelector(".lg\\:flex");
+  if (processContainer) {
+    processContainer.addEventListener("mouseenter", stopProcessAuto);
+    processContainer.addEventListener("mouseleave", startProcessAuto);
+    startProcessAuto();
   }
 
   // ====================================================================
-  // MOBILE — Carousel
+  // 5. MOBILE PROCESS CAROUSEL
   // ====================================================================
   let mobileIdx = 0;
-  const mobileTotal = processSteps.length;
-  const mobileTrack = document.getElementById("mobile-carousel-track");
+  const mobileTotal = processStepsData.length;
+  const mobileTrack = document.getElementById("mobile-track");
   const mobileDots = document.querySelectorAll<HTMLElement>(".mobile-dot");
   const mobileProgress = document.getElementById("mobile-progress");
-  const mobileCurrent = document.getElementById("mobile-step-current");
-  const mobilePrev = document.getElementById("mobile-prev");
-  const mobileNext = document.getElementById("mobile-next");
-  let mobileAutoTimer: ReturnType<typeof setInterval> | undefined;
+  const mobileCurrent = document.getElementById("mobile-current");
+  const mobileTitle = document.getElementById("mobile-title");
+  const mobileSlideIcon = document.getElementById("mobile-slide-icon");
+  let mobileTimer: ReturnType<typeof setInterval> | undefined;
 
   function goMobile(idx: number) {
     if (!mobileTrack) return;
-    mobileIdx = (idx + mobileTotal) % mobileTotal;
+    mobileIdx = ((idx % mobileTotal) + mobileTotal) % mobileTotal;
     mobileTrack.style.transform = `translateX(-${mobileIdx * 100}%)`;
     if (mobileProgress) mobileProgress.style.width = `${((mobileIdx + 1) / mobileTotal) * 100}%`;
     if (mobileCurrent) mobileCurrent.textContent = String(mobileIdx + 1);
+    if (mobileTitle && processStepsData[mobileIdx]) mobileTitle.textContent = processStepsData[mobileIdx].title;
+    if (mobileSlideIcon && processStepsData[mobileIdx]) mobileSlideIcon.setAttribute("name", processStepsData[mobileIdx].icon);
 
-    // Update mobile image
-    document.querySelectorAll<HTMLElement>("[id^='mobile-process-img-']").forEach((img, i) => {
-      if (i === mobileIdx) {
-        img.classList.add("opacity-100", "scale-100");
-        img.classList.remove("opacity-0", "scale-110");
-      } else {
-        img.classList.remove("opacity-100", "scale-100");
-        img.classList.add("opacity-0", "scale-110");
-      }
+    document.querySelectorAll<HTMLElement>(`[id^="mobile-img-"]`).forEach((img, i) => {
+      if (i === mobileIdx) { img.classList.add("opacity-100", "scale-100"); img.classList.remove("opacity-0", "scale-110"); }
+      else { img.classList.remove("opacity-100", "scale-100"); img.classList.add("opacity-0", "scale-110"); }
     });
-    // Update mobile image title
-    const titleEl = document.getElementById("mobile-step-title");
-    if (titleEl) titleEl.textContent = processSteps[mobileIdx].title;
 
     mobileDots.forEach((dot, i) => {
-      if (i === mobileIdx) {
-        dot.className = "mobile-dot w-6 bg-primary rounded-full transition-all duration-400";
-      } else {
-        dot.className = `mobile-dot h-1.5 w-1.5 rounded-full bg-base-300 transition-all duration-400`;
-      }
+      if (i === mobileIdx) { dot.className = "mobile-dot h-1.5 w-6 rounded-full bg-primary transition-all duration-400"; }
+      else { dot.className = "mobile-dot h-1.5 w-1.5 rounded-full bg-base-300 transition-all duration-400"; }
     });
   }
 
-  function startMobileAuto() { stopMobileAuto(); mobileAutoTimer = setInterval(() => { goMobile(mobileIdx + 1); }, 4000); }
-  function stopMobileAuto() { if (mobileAutoTimer) clearInterval(mobileAutoTimer); }
-  function resetMobileAuto() { stopMobileAuto(); startMobileAuto(); }
+  function startMobile() { stopMobile(); mobileTimer = setInterval(() => goMobile(mobileIdx + 1), 4000); }
+  function stopMobile() { if (mobileTimer) clearInterval(mobileTimer); }
+  function resetMobile() { stopMobile(); startMobile(); }
 
-  mobilePrev?.addEventListener("click", () => { goMobile(mobileIdx - 1); resetMobileAuto(); });
-  mobileNext?.addEventListener("click", () => { goMobile(mobileIdx + 1); resetMobileAuto(); });
+  document.getElementById("mobile-prev")?.addEventListener("click", () => { goMobile(mobileIdx - 1); resetMobile(); });
+  document.getElementById("mobile-next")?.addEventListener("click", () => { goMobile(mobileIdx + 1); resetMobile(); });
+  mobileDots.forEach((dot, i) => { dot.addEventListener("click", () => { goMobile(i); resetMobile(); }); });
 
-  // Dot click
-  mobileDots.forEach((dot, i) => {
-    dot.addEventListener("click", () => { goMobile(i); resetMobileAuto(); });
-  });
-
-  // Touch swipe
-  let touchX = 0;
-  const trackContainer = document.getElementById("mobile-carousel-track")?.parentElement;
-  trackContainer?.addEventListener("touchstart", (e) => { touchX = e.changedTouches[0].screenX; stopMobileAuto(); }, { passive: true });
-  trackContainer?.addEventListener("touchend", (e) => {
-    const diff = touchX - e.changedTouches[0].screenX;
-    if (Math.abs(diff) > 40) {
-      goMobile(diff > 0 ? mobileIdx + 1 : mobileIdx - 1);
-    }
-    resetMobileAuto();
+  let mTouchX = 0;
+  mobileTrack?.parentElement?.addEventListener("touchstart", (e) => { mTouchX = e.changedTouches[0].screenX; stopMobile(); }, { passive: true });
+  mobileTrack?.parentElement?.addEventListener("touchend", (e) => {
+    const diff = mTouchX - e.changedTouches[0].screenX;
+    if (Math.abs(diff) > 40) goMobile(diff > 0 ? mobileIdx + 1 : mobileIdx - 1);
+    resetMobile();
   }, { passive: true });
 
-  startMobileAuto();
+  startMobile();
 
   // ====================================================================
-  // TESTIMONIAL CAROUSEL
+  // 6. TESTIMONIAL CAROUSEL
   // ====================================================================
-  const track = document.getElementById("testimonial-track");
-  const slides = document.querySelectorAll<HTMLElement>(".testimonial-slide");
-  const dots = document.querySelectorAll<HTMLElement>(".testi-dot");
-  const prevBtn = document.getElementById("testi-prev");
-  const nextBtn = document.getElementById("testi-next");
+  const testiTrack = document.getElementById("testi-track");
+  const testiSlides = document.querySelectorAll<HTMLElement>(".testi-slide");
+  const testiDots = document.querySelectorAll<HTMLElement>(".testi-dot");
   let testiIdx = 0;
-  const testiTotal = slides.length;
-  let testiInterval: ReturnType<typeof setInterval> | undefined;
+  const testiTotal = testiSlides.length;
+  let testiTimer: ReturnType<typeof setInterval> | undefined;
 
   function updateTesti() {
-    if (!track) return;
-    track.style.transform = `translateX(-${testiIdx * 100}%)`;
-    dots.forEach((d, i) => {
+    if (!testiTrack) return;
+    testiTrack.style.transform = `translateX(-${testiIdx * 100}%)`;
+    testiDots.forEach((d, i) => {
       if (i === testiIdx) { d.className = "testi-dot h-2 w-7 rounded-full bg-primary transition-all duration-400"; }
       else { d.className = "testi-dot h-2 w-2 rounded-full bg-base-300 transition-all duration-400"; }
     });
   }
 
-  function startTesti() { stopTesti(); testiInterval = setInterval(() => { testiIdx = (testiIdx + 1) % testiTotal; updateTesti(); }, 4000); }
-  function stopTesti() { if (testiInterval) clearInterval(testiInterval); }
+  function startTesti() { stopTesti(); testiTimer = setInterval(() => { testiIdx = (testiIdx + 1) % testiTotal; updateTesti(); }, 4000); }
+  function stopTesti() { if (testiTimer) clearInterval(testiTimer); }
   function resetTesti() { stopTesti(); startTesti(); }
 
-  prevBtn?.addEventListener("click", () => { testiIdx = (testiIdx - 1 + testiTotal) % testiTotal; updateTesti(); resetTesti(); });
-  nextBtn?.addEventListener("click", () => { testiIdx = (testiIdx + 1) % testiTotal; updateTesti(); resetTesti(); });
-  dots.forEach(d => { d.addEventListener("click", () => { testiIdx = parseInt(d.dataset.index || "0"); updateTesti(); resetTesti(); }); });
+  document.getElementById("testi-prev")?.addEventListener("click", () => { testiIdx = (testiIdx - 1 + testiTotal) % testiTotal; updateTesti(); resetTesti(); });
+  document.getElementById("testi-next")?.addEventListener("click", () => { testiIdx = (testiIdx + 1) % testiTotal; updateTesti(); resetTesti(); });
+  testiDots.forEach(d => { d.addEventListener("click", () => { testiIdx = parseInt(d.dataset.idx || "0"); updateTesti(); resetTesti(); }); });
 
   startTesti();
 </script>
 
 <style is:global>
-  .hero-bg-slide { transition: opacity 1s ease-in-out, transform 1.2s ease-out; }
-  #testimonial-track { transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
-
-  /* Process section animations */
-  .process-animate {
-    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+  /* ================================================================== */
+  /* HERO SLIDER TRANSITIONS                                            */
+  /* ================================================================== */
+  .hero-slide {
+    transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1);
   }
-  .process-feature-img {
+
+  /* ================================================================== */
+  /* PROCESS TRANSITIONS                                                */
+  /* ================================================================== */
+  .process-img {
     transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  .process-step-btn {
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  .process-btn {
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  .process-step-btn .rounded-xl {
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  .process-btn .rounded-xl {
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  .process-step-btn .rounded-full {
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  #mobile-carousel-track {
-    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  #mobile-progress {
-    transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  .mobile-dot {
-    cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  }
+
+  /* ================================================================== */
+  /* CAROUSEL TRANSITIONS                                               */
+  /* ================================================================== */
+  #testi-track { transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+  #mobile-track { transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+  #mobile-progress { transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+  .mobile-dot { cursor: pointer; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+  .testi-dot { cursor: pointer; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
 </style>

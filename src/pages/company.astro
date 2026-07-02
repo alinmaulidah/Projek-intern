@@ -3,21 +3,14 @@ import MainLayout from "../layouts/MainLayout.astro";
 import Icon from "../components/ui/Icon.astro";
 import { siteConfig } from "../data/site";
 import { createWhatsappLink } from "../lib/whatsapp";
-import { visionMission, ourStory, teamMembers, companyWorkProcess, trustPlaceholder } from "../data/company";
+import { visionMission, ourStory, teamMembers, companyWorkProcess } from "../data/company";
 import { advantages } from "../data/advantages";
-import { factoryImages, companyImages } from "../data/images";
+import { factoryStats } from "../data/factory";
+import { certifications } from "../data/certifications";
 
 const waLink = createWhatsappLink(siteConfig.waNumber, siteConfig.waText);
-const waConsultLink = createWhatsappLink(siteConfig.waNumber, "Halo, saya ingin konsultasi tentang maklon skincare.");
-
-const portfolioItems = [
-  { name: "Skincare Brand A", category: "Skincare", image: factoryImages.formulasiLab },
-  { name: "Bodycare Brand B", category: "Bodycare", image: factoryImages.packagingArea },
-  { name: "Cosmetics Brand C", category: "Makeup", image: factoryImages.samplingRoom },
-  { name: "Serum Brand D", category: "Skincare", image: factoryImages.labResearch },
-  { name: "Parfum Brand E", category: "Fragrance", image: factoryImages.qualityControl },
-  { name: "Babycare Brand F", category: "Baby Care", image: factoryImages.productionLine },
-];
+const waConsultLink = createWhatsappLink(siteConfig.waNumber, "Halo, saya ingin konsultasi maklon skincare.");
+const ceo = teamMembers[0];
 ---
 
 <MainLayout
@@ -26,86 +19,116 @@ const portfolioItems = [
 >
   <main>
     <!-- ================================================================== -->
-    <!-- 1. INTRO — Foto perusahaan + sejarah singkat                        -->
+    <!-- 1. HERO — Full-width image + overlay + stats counter                -->
     <!-- ================================================================== -->
-    <section class="bg-base-60 pb-6 pt-16 md:pb-10 md:pt-24">
+    <section class="relative overflow-hidden bg-base-100 pt-16 lg:pt-24">
       <div class="mx-auto max-w-7xl px-4 lg:px-8">
-       
-
-        <div class="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
-          <!-- LEFT: Photo -->
-          <div class="relative overflow-hidden rounded-2xl shadow-lg">
-            <img src={ourStory.image} alt="Tim Aquila Maklon" class="h-[320px] w-full object-cover md:h-[400px]" />
-            <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
-            <div class="absolute bottom-5 left-5 rounded-full bg-white/90 px-4 py-1.5 text-xs font-bold text-primary shadow backdrop-blur-sm">
-              Sejak 2015
+        <div class="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+          <!-- LEFT: Image with badge -->
+          <div class="reveal group relative">
+            <div class="relative overflow-hidden rounded-3xl shadow-2xl">
+              <img src={ourStory.image} alt="Aquila Maklon" class="h-[340px] w-full object-cover transition-transform duration-700 group-hover:scale-105 md:h-[440px]" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
+              <div class="absolute left-5 top-5 rounded-full bg-white/90 px-4 py-1.5 text-xs font-bold text-primary shadow backdrop-blur-sm">
+                <span class="mr-1.5 inline-block h-2 w-2 rounded-full bg-green-500"></span>
+                Beroperasi Sejak 2015
+              </div>
+              <div class="absolute bottom-5 left-5 right-5">
+                <p class="text-sm font-medium text-white/80">{siteConfig.factoryOwnership}</p>
+              </div>
             </div>
           </div>
 
-          <!-- RIGHT: History / Story -->
-          <div>
-            <span class="text-[11px] font-semibold uppercase tracking-[0.2em] text-primary/60">Tentang Kami</span>
-            <h1 class="mt-3 text-3xl font-black md:text-4xl">Mitra Maklon Skincare & Kosmetik Terpercaya</h1>
-            <div class="mt-5 space-y-4">
-              {ourStory.paragraphs.map(function(p) {
-                return <p class="text-sm leading-relaxed text-base-content/65 md:text-base">{p}</p>;
-              })}
+          <!-- RIGHT: Text -->
+          <div class="reveal">
+            <div class="mb-4 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5">
+              <span class="h-1.5 w-1.5 rounded-full bg-primary"></span>
+              <span class="text-[11px] font-semibold tracking-[0.2em] text-primary">TENTANG KAMI</span>
             </div>
-            <div class="mt-6 flex items-center gap-3">
+            <h1 class="text-3xl font-black tracking-tight md:text-4xl lg:text-5xl">
+              Mitra Maklon <span class="text-primary">Skincare & Kosmetik</span> Terpercaya
+            </h1>
+            <p class="mt-4 leading-relaxed text-base-content/60 md:text-lg">
+              {ourStory.paragraphs[0]}
+            </p>
+            <p class="mt-3 text-sm leading-relaxed text-base-content/50 md:text-base">
+              {ourStory.paragraphs[1]}
+            </p>
+            <div class="mt-6 flex flex-wrap items-center gap-3">
               <a href={waConsultLink} target="_blank" rel="noopener noreferrer"
-                class="inline-flex h-11 items-center gap-2 rounded-full bg-primary px-6 text-sm font-semibold text-white shadow-md shadow-primary/15 transition-all duration-300 hover:scale-105 hover:shadow-lg">
-                <Icon name="mdi:whatsapp" size={16} />
-                Konsultasi Sekarang
+                class="inline-flex h-12 items-center gap-2 rounded-full bg-primary px-6 text-sm font-semibold text-white shadow-lg shadow-primary/20 transition-all duration-300 hover:scale-105 hover:shadow-xl">
+                <Icon name="mdi:whatsapp" size={18} />
+                Konsultasi Gratis
+              </a>
+              <a href="#keunggulan"
+                class="inline-flex h-12 items-center gap-2 rounded-full border border-base-300 px-6 text-sm font-medium text-base-content/60 transition-all duration-300 hover:border-primary/30 hover:text-primary">
+                Keunggulan Kami
+                <Icon name="lucide:arrow-down" size={14} />
               </a>
             </div>
           </div>
         </div>
+
+        <!-- Stats bar -->
+        <div class="mt-12 grid grid-cols-2 gap-4 rounded-3xl border border-base-200/60 bg-base-200/30 p-6 sm:grid-cols-4 lg:mt-16">
+          {factoryStats.map(function(stat) {
+            return (
+              <div class="stat-item text-center" style="opacity:0;transform:translateY(16px)">
+                <div class="text-2xl font-black text-primary md:text-3xl">{stat.value}</div>
+                <div class="mt-1 text-xs text-base-content/50">{stat.label}</div>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </section>
 
     <!-- ================================================================== -->
-    <!-- 2. VISI & MISI — Dengan gambar di samping                           -->
+    <!-- 2. VISI & MISI — Interactive toggle cards                           -->
     <!-- ================================================================== -->
-    <section class="bg-base-200/30 py-16 md:py-20">
+    <section class="py-16 md:py-24">
       <div class="mx-auto max-w-7xl px-4 lg:px-8">
         <div class="text-center">
           <span class="text-[11px] font-semibold uppercase tracking-[0.2em] text-primary/60">Visi & Misi</span>
           <h2 class="mt-3 text-3xl font-black md:text-4xl">Komitmen Kami</h2>
+          <p class="mt-2 text-sm text-base-content/50">Arah & tujuan yang memandu setiap langkah Aquila Maklon</p>
         </div>
 
-        <!-- Vision — text left, image right -->
-        <div class="mt-10 grid items-center gap-8 lg:grid-cols-5">
-          <div class="lg:col-span-3">
-            <div class="rounded-2xl border border-primary/10 bg-gradient-to-br from-primary/[0.04] to-base-100 p-8 md:p-10">
-              <span class="inline-block text-[11px] font-semibold uppercase tracking-[0.2em] text-primary/60">Visi</span>
-              <p class="mt-4 text-lg leading-relaxed text-base-content/75 italic">
-                "{visionMission.vision}"
-              </p>
+        <div class="mt-10 grid gap-6 lg:grid-cols-2">
+          <!-- Vision Card -->
+          <div class="group relative overflow-hidden rounded-3xl border border-primary/10 bg-gradient-to-br from-primary/[0.04] to-base-100 p-8 transition-all duration-500 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/5 md:p-10">
+            <div class="flex items-start gap-4">
+              <div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-primary/10 transition-all duration-500 group-hover:scale-110 group-hover:bg-primary">
+                <Icon name="lucide:eye" size={26} class="text-primary transition-colors duration-500 group-hover:text-white" />
+              </div>
+              <div>
+                <h3 class="text-xl font-bold">Visi</h3>
+                <p class="mt-3 text-base italic leading-relaxed text-base-content/65">
+                  "{visionMission.vision}"
+                </p>
+              </div>
             </div>
           </div>
-          <div class="lg:col-span-2">
-            <img src={factoryImages.labResearch} alt="Visi Aquila" class="h-48 w-full rounded-2xl object-cover shadow-md md:h-56" loading="lazy" />
-          </div>
-        </div>
 
-        <!-- Mission — image left, text right -->
-        <div class="mt-6 grid items-center gap-8 lg:grid-cols-5">
-          <div class="lg:col-span-2 lg:order-1">
-            <img src={factoryImages.qualityControl} alt="Misi Aquila" class="h-48 w-full rounded-2xl object-cover shadow-md md:h-56" loading="lazy" />
-          </div>
-          <div class="lg:col-span-3 lg:order-2">
-            <div class="rounded-2xl border border-base-200/60 bg-base-100 p-8 md:p-10">
-              <span class="inline-block text-[11px] font-semibold uppercase tracking-[0.2em] text-primary/60">Misi</span>
-              <ul class="mt-4 space-y-3">
-                {visionMission.missions.map(function(m: string, i: number) {
-                  return (
-                    <li class="flex items-start gap-3">
-                      <span class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary/10 text-xs font-bold text-primary">{i + 1}</span>
-                      <span class="text-sm leading-relaxed text-base-content/70">{m}</span>
-                    </li>
-                  );
-                })}
-              </ul>
+          <!-- Mission Card -->
+          <div class="group relative overflow-hidden rounded-3xl border border-base-200/60 bg-base-100 p-8 transition-all duration-500 hover:-translate-y-1 hover:border-primary/10 hover:shadow-xl md:p-10">
+            <div class="flex items-start gap-4">
+              <div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-primary/10 transition-all duration-500 group-hover:scale-110 group-hover:bg-primary">
+                <Icon name="lucide:target" size={26} class="text-primary transition-colors duration-500 group-hover:text-white" />
+              </div>
+              <div>
+                <h3 class="text-xl font-bold">Misi</h3>
+                <ul class="mt-3 space-y-2.5">
+                  {visionMission.missions.map(function(m: string, i: number) {
+                    return (
+                      <li class="flex items-start gap-2.5">
+                        <span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/10 text-[10px] font-bold text-primary">{i + 1}</span>
+                        <span class="text-sm leading-relaxed text-base-content/65">{m}</span>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
             </div>
           </div>
         </div>
@@ -113,25 +136,34 @@ const portfolioItems = [
     </section>
 
     <!-- ================================================================== -->
-    <!-- 3. KEUNGGULAN — Foto + deskripsi                                    -->
+    <!-- 3. KEUNGGULAN — Compact cards + hover popup                         -->
     <!-- ================================================================== -->
-    <section class="bg-base-100 py-16 md:py-20">
+    <section id="keunggulan" class="bg-base-200/30 py-16 md:py-24">
       <div class="mx-auto max-w-7xl px-4 lg:px-8">
         <div class="text-center">
           <span class="text-[11px] font-semibold uppercase tracking-[0.2em] text-primary/60">Keunggulan</span>
           <h2 class="mt-3 text-3xl font-black md:text-4xl">Mengapa Memilih Aquila Maklon?</h2>
+          <p class="mt-2 text-sm text-base-content/50">6 alasan utama brand owner mempercayakan produknya kepada kami</p>
         </div>
 
-        <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div class="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {advantages.map(function(adv) {
             return (
-              <div class="group relative overflow-hidden rounded-2xl bg-base-100 shadow-sm ring-1 ring-base-200/60 transition-all duration-500 hover:-translate-y-1 hover:shadow-md hover:ring-primary/15">
-                <figure class="h-44 overflow-hidden">
-                  <img src={adv.image} alt={adv.title} class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
-                </figure>
-                <div class="p-5">
-                  <h3 class="text-base font-bold tracking-tight">{adv.title}</h3>
-                  <p class="mt-1 text-sm leading-relaxed text-base-content/55">{adv.desc}</p>
+              <div class="adv-card group relative flex cursor-default flex-col rounded-2xl border border-base-200/50 bg-base-100 p-5 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:border-primary/20 hover:shadow-lg" style="opacity:0;transform:translateY(30px)">
+                <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 transition-all duration-500 group-hover:scale-110 group-hover:bg-primary">
+                  <Icon name={adv.icon} size={20} class="text-primary transition-colors duration-500 group-hover:text-white" />
+                </div>
+                <h3 class="mt-3 text-sm font-bold tracking-tight">{adv.title}</h3>
+                <p class="mt-1 text-xs leading-relaxed text-base-content/50">{adv.desc}</p>
+
+                <!-- Hover popup -->
+                <div class="pointer-events-none absolute bottom-full left-1/2 z-[999] mb-3 w-64 -translate-x-1/2 rounded-2xl border-2 border-primary/20 bg-white p-4 opacity-0 shadow-2xl transition-all duration-300 group-hover:mb-4 group-hover:opacity-100">
+                  <div class="absolute -bottom-2.5 left-1/2 h-5 w-5 -translate-x-1/2 rotate-45 border-b-2 border-r-2 border-primary/20 bg-white"></div>
+                  <div class="mb-2 flex items-center gap-2">
+                    <Icon name={adv.icon} size={16} class="text-primary" />
+                    <span class="text-xs font-bold text-primary">{adv.title}</span>
+                  </div>
+                  <p class="text-xs leading-relaxed text-base-content/60">{adv.desc}</p>
                 </div>
               </div>
             );
@@ -141,59 +173,41 @@ const portfolioItems = [
     </section>
 
     <!-- ================================================================== -->
-    <!-- 4. TRUST — Dipercaya brand partner                                  -->
+    <!-- 4. SERTIFIKASI — Compact badge strip                                -->
     <!-- ================================================================== -->
-    <section class="bg-base-200/30 py-16 md:py-20">
+    <section class="py-14 md:py-20">
       <div class="mx-auto max-w-7xl px-4 lg:px-8">
         <div class="text-center">
-          <span class="text-[11px] font-semibold uppercase tracking-[0.2em] text-primary/60">Kepercayaan</span>
-          <h2 class="mt-3 text-3xl font-black md:text-4xl">Yang Membuat Kami Berbeda</h2>
+          <span class="text-[11px] font-semibold uppercase tracking-[0.2em] text-primary/60">Sertifikasi & Legalitas</span>
+          <h2 class="mt-3 text-3xl font-black md:text-4xl">Diakui & Tersertifikasi</h2>
         </div>
 
-        <div class="mt-10 grid gap-5 md:grid-cols-3">
-          {trustPlaceholder.map(function(t) {
+        <div class="mt-10 flex flex-wrap items-center justify-center gap-4">
+          {certifications.map(function(cert) {
             return (
-              <div class="group relative overflow-hidden rounded-2xl bg-base-100 ring-1 ring-base-200/50 transition-all duration-500 hover:-translate-y-1 hover:shadow-lg hover:ring-primary/10">
-                <img src={t.image} alt={t.title} class="h-44 w-full object-cover" loading="lazy" />
-                <div class="p-6">
-                  <h3 class="text-base font-bold">{t.title}</h3>
-                  <p class="mt-2 text-sm leading-relaxed text-base-content/55">{t.desc}</p>
+              <div class="group relative flex cursor-default items-center gap-3 rounded-2xl border border-base-200/50 bg-base-100 px-5 py-3 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:border-primary/20 hover:shadow-md">
+                <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 transition-all duration-500 group-hover:scale-110 group-hover:bg-primary">
+                  <Icon name={cert.icon} size={18} class="text-primary transition-colors duration-500 group-hover:text-white" />
                 </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    </section>
+                <div>
+                  <p class="text-sm font-bold">{cert.name}</p>
+                  <p class="text-[11px] text-base-content/40">{cert.number}</p>
+                </div>
 
-    <!-- ================================================================== -->
-    <!-- 5. PORTOFOLIO                                                       -->
-    <!-- ================================================================== -->
-    <section class="bg-base-100 py-16 md:py-20">
-      <div class="mx-auto max-w-7xl px-4 lg:px-8">
-        <div class="text-center">
-          <span class="text-[11px] font-semibold uppercase tracking-[0.2em] text-primary/60">Portofolio</span>
-          <h2 class="mt-3 text-3xl font-black md:text-4xl">Hasil Karya Kami</h2>
-        </div>
-
-        <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {portfolioItems.map(function(item) {
-            return (
-              <div class="group relative overflow-hidden rounded-2xl shadow-sm ring-1 ring-base-200/40 transition-all duration-500 hover:-translate-y-1 hover:shadow-md">
-                <img src={item.image} alt={item.name} class="h-56 w-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
-                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"></div>
-                <div class="absolute bottom-0 left-0 right-0 translate-y-2 p-4 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
-                  <span class="rounded-full bg-white/20 px-2.5 py-0.5 text-[10px] font-semibold text-white backdrop-blur-sm">{item.category}</span>
-                  <h4 class="mt-1.5 text-base font-bold text-white">{item.name}</h4>
+                <!-- Popup detail -->
+                <div class="pointer-events-none absolute bottom-full left-1/2 z-[999] mb-3 w-60 -translate-x-1/2 rounded-2xl border-2 border-primary/20 bg-white p-4 opacity-0 shadow-2xl transition-all duration-300 group-hover:mb-4 group-hover:opacity-100">
+                  <div class="absolute -bottom-2.5 left-1/2 h-5 w-5 -translate-x-1/2 rotate-45 border-b-2 border-r-2 border-primary/20 bg-white"></div>
+                  <p class="text-xs font-bold text-primary">{cert.fullName}</p>
+                  <p class="mt-1 text-xs leading-relaxed text-base-content/60">{cert.desc}</p>
                 </div>
               </div>
             );
           })}
         </div>
 
-        <div class="mt-8 text-center">
-          <a href="/portofolio" class="inline-flex items-center gap-2 rounded-full border border-base-300 px-6 py-2.5 text-sm font-medium text-base-content/60 transition-all duration-300 hover:border-primary/30 hover:text-primary">
-            Lihat Semua Portofolio
+        <div class="mt-6 text-center">
+          <a href="/certification" class="inline-flex items-center gap-2 text-sm font-medium text-primary transition-colors hover:underline">
+            Lihat detail sertifikasi
             <Icon name="lucide:arrow-right" size={14} />
           </a>
         </div>
@@ -201,53 +215,56 @@ const portfolioItems = [
     </section>
 
     <!-- ================================================================== -->
-    <!-- 6. TEAM — Focus on CEO / Founder                                   -->
+    <!-- 5. CEO — Single card, elegant                                       -->
     <!-- ================================================================== -->
-    <section class="bg-base-200/30 py-16 md:py-20">
+    <section class="bg-base-200/30 py-16 md:py-24">
       <div class="mx-auto max-w-7xl px-4 lg:px-8">
         <div class="text-center">
-          <span class="text-[11px] font-semibold uppercase tracking-[0.2em] text-primary/60">Tim Kami</span>
-          <h2 class="mt-3 text-3xl font-black md:text-4xl">Orang di Balik Aquila</h2>
+          <span class="text-[11px] font-semibold uppercase tracking-[0.2em] text-primary/60">Kepemimpinan</span>
+          <h2 class="mt-3 text-3xl font-black md:text-4xl">Di Balik Aquila Maklon</h2>
         </div>
 
-        <div class="mt-10 mx-auto max-w-3xl">
-          <div class="group flex flex-col items-center gap-6 rounded-2xl border border-base-200/40 bg-base-100 p-8 shadow-sm transition-all duration-500 hover:border-primary/15 hover:shadow-md sm:flex-row sm:p-10">
-            {/* Photo */}
-            <div class="h-28 w-28 shrink-0 overflow-hidden rounded-2xl ring-4 ring-primary/10 transition-all duration-500 group-hover:ring-primary/25 group-hover:scale-105">
-              <img src={teamMembers[0].avatar} alt={teamMembers[0].name} class="h-full w-full object-cover" loading="lazy" />
+        <div class="mx-auto mt-10 max-w-lg">
+          <div class="group relative overflow-hidden rounded-3xl border border-base-200/40 bg-base-100 p-8 text-center shadow-sm transition-all duration-500 hover:-translate-y-1 hover:border-primary/15 hover:shadow-xl md:p-10">
+            <div class="mx-auto h-32 w-32 overflow-hidden rounded-full ring-4 ring-primary/10 transition-all duration-500 group-hover:scale-105 group-hover:ring-primary/30">
+              <img src={ceo.avatar} alt={ceo.name} class="h-full w-full object-cover" loading="lazy" />
             </div>
-            {/* Name + Role + Description */}
-            <div class="flex-1 text-center sm:text-left">
-              <h4 class="text-xl font-bold text-base-content">{teamMembers[0].name}</h4>
-              <p class="text-sm font-semibold text-primary">{teamMembers[0].role}</p>
-              <p class="mt-2 text-base leading-relaxed text-base-content/60">{teamMembers[0].bio}</p>
-            </div>
+            <h4 class="mt-5 text-xl font-bold">{ceo.name}</h4>
+            <p class="text-sm font-semibold text-primary">{ceo.role}</p>
+            <p class="mt-3 text-sm leading-relaxed text-base-content/55">{ceo.bio}</p>
+            <div class="mx-auto mt-5 h-0.5 w-16 rounded-full bg-primary/20"></div>
           </div>
         </div>
       </div>
     </section>
 
     <!-- ================================================================== -->
-    <!-- 7. WORK PROCESS — Horizontal grid, tidak vertikal                    -->
+    <!-- 6. WORK PROCESS — Horizontal with popup detail                      -->
     <!-- ================================================================== -->
-    <section id="proses-kerja" class="bg-base-100 py-16 md:py-20">
+    <section class="py-16 md:py-24">
       <div class="mx-auto max-w-7xl px-4 lg:px-8">
         <div class="text-center">
           <span class="text-[11px] font-semibold uppercase tracking-[0.2em] text-primary/60">Proses Kerja</span>
           <h2 class="mt-3 text-3xl font-black md:text-4xl">Bagaimana Kami Bekerja</h2>
+          <p class="mt-2 text-sm text-base-content/50">5 langkah dari konsultasi hingga produk di tangan Anda</p>
         </div>
 
-        <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-          {companyWorkProcess.map(function(step, i) {
+        <div class="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+          {companyWorkProcess.map(function(step) {
             return (
-              <div class="group relative flex flex-col items-center rounded-2xl border border-base-200/40 bg-base-100 p-5 text-center shadow-sm transition-all duration-500 hover:-translate-y-1 hover:border-primary/15 hover:shadow-md">
-                <!-- Step number -->
-                <div class={`flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br ${step.color} text-base font-bold text-white shadow-md transition-all duration-500 group-hover:scale-110 group-hover:shadow-lg`}>
+              <div class="group relative flex cursor-default flex-col items-center rounded-2xl border border-base-200/40 bg-base-100 p-5 text-center shadow-sm transition-all duration-500 hover:-translate-y-1 hover:border-primary/15 hover:shadow-md">
+                <div class="flex h-12 w-12 items-center justify-center rounded-full bg-primary text-base font-black text-white shadow-md transition-all duration-500 group-hover:scale-110 group-hover:shadow-lg">
                   {step.step}
                 </div>
-                <!-- Content -->
                 <h4 class="mt-3 text-sm font-bold tracking-tight">{step.title}</h4>
-                <p class="mt-1.5 text-xs leading-relaxed text-base-content/50">{step.desc}</p>
+                <p class="mt-1.5 text-xs leading-relaxed text-base-content/45">{step.desc}</p>
+
+                <!-- Popup detail -->
+                <div class="pointer-events-none absolute bottom-full left-1/2 z-[999] mb-3 w-60 -translate-x-1/2 rounded-2xl border-2 border-primary/20 bg-white p-4 opacity-0 shadow-2xl transition-all duration-300 group-hover:mb-4 group-hover:opacity-100">
+                  <div class="absolute -bottom-2.5 left-1/2 h-5 w-5 -translate-x-1/2 rotate-45 border-b-2 border-r-2 border-primary/20 bg-white"></div>
+                  <p class="text-center text-xs font-bold text-primary">Tahap {step.step}</p>
+                  <p class="mt-1 text-xs leading-relaxed text-base-content/60">{step.desc}</p>
+                </div>
               </div>
             );
           })}
@@ -256,27 +273,85 @@ const portfolioItems = [
     </section>
 
     <!-- ================================================================== -->
-    <!-- 8. CTA                                                              -->
+    <!-- 7. CTA                                                              -->
     <!-- ================================================================== -->
-    <section class="relative overflow-hidden bg-gradient-to-br from-primary to-emerald-800 py-16">
-      <div class="pointer-events-none absolute -right-20 -top-20 h-60 w-60 rounded-full bg-white/5 blur-3xl"></div>
-      <div class="mx-auto max-w-3xl px-4 text-center lg:px-8">
-        <h2 class="text-3xl font-black text-white md:text-4xl">Siap Bangun Brand Impian Anda?</h2>
-        <p class="mt-4 text-base leading-relaxed text-white/70">
-          Hubungi kami untuk konsultasi gratis dan mulai perjalanan brand Anda bersama Aquila Maklon. Tim kami siap mendampingi dari awal hingga produk siap jual.
+    <section class="relative overflow-hidden bg-gradient-to-br from-primary to-emerald-800 py-20">
+      <div class="pointer-events-none absolute -right-20 -top-20 h-80 w-80 rounded-full bg-white/5 blur-3xl"></div>
+      <div class="pointer-events-none absolute -bottom-20 -left-20 h-60 w-60 rounded-full bg-white/5 blur-3xl"></div>
+      <div class="pointer-events-none absolute inset-0 opacity-[0.03]" style="background-image:radial-gradient(circle at 50% 50%, white 1px, transparent 1px);background-size:40px 40px"></div>
+      <div class="relative mx-auto max-w-3xl px-4 text-center lg:px-8">
+        <h2 class="text-3xl font-black text-white md:text-4xl lg:text-5xl">Siap Bangun Brand Impian Anda?</h2>
+        <p class="mt-4 text-base leading-relaxed text-white/70 md:text-lg">
+          Konsultasikan ide produk Anda sekarang. Tim kami siap mendampingi dari awal hingga produk siap jual — tanpa ribet.
         </p>
         <div class="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
           <a href={waLink} target="_blank" rel="noopener noreferrer"
-            class="inline-flex h-12 items-center gap-2 rounded-full bg-white px-8 text-sm font-semibold text-primary shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl">
-            <Icon name="mdi:whatsapp" class="h-4 w-4" />
+            class="inline-flex h-14 items-center gap-2 rounded-full bg-white px-10 text-sm font-bold text-primary shadow-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+            <Icon name="mdi:whatsapp" size={20} />
             Konsultasi via WhatsApp
           </a>
           <a href="/layanan"
-            class="inline-flex h-12 items-center gap-2 rounded-full border border-white/30 px-8 text-sm font-medium text-white transition-all duration-300 hover:border-white/50 hover:bg-white/10">
+            class="inline-flex h-14 items-center gap-2 rounded-full border-2 border-white/20 px-10 text-sm font-semibold text-white transition-all duration-300 hover:border-white/40 hover:bg-white/10">
             Lihat Layanan Kami
+            <Icon name="lucide:arrow-right" size={16} />
           </a>
         </div>
       </div>
     </section>
   </main>
 </MainLayout>
+
+<style>
+  .adv-card,
+  .group {
+    overflow: visible !important;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const observerOptions = { threshold: 0.2, rootMargin: '0px 0px -40px 0px' };
+
+    const reveal = function (entries, obs) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const siblings = Array.from(el.parentElement?.children || []);
+          const idx = siblings.indexOf(el);
+          el.style.transition = 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1) ' + idx * 0.08 + 's';
+          el.style.opacity = '1';
+          el.style.transform = 'translateY(0)';
+          obs.unobserve(el);
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(reveal, observerOptions);
+
+    document.querySelectorAll('.adv-card').forEach(function (el) {
+      observer.observe(el);
+    });
+    document.querySelectorAll('.stat-item').forEach(function (el) {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(16px)';
+      observer.observe(el);
+    });
+
+    // Hero reveal
+    document.querySelectorAll('.reveal').forEach(function (el, i) {
+      el.style.opacity = '0';
+      el.style.transform = i === 0 ? 'translateX(-24px)' : 'translateX(24px)';
+      const obs2 = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.style.transition = 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.15s';
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateX(0)';
+            obs2.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.2 });
+      obs2.observe(el);
+    });
+  });
+</script>

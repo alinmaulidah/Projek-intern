@@ -99,6 +99,34 @@ export const productImages = {
     "https://images.unsplash.com/photo-1555252333-9f8e92e65df9?w=600&q=80",
 };
 
+// --- KATEGORI PRODUK (square 600px, untuk trust strip scrolling) ---
+export const categoryImages = [
+  {
+    name: "Skincare",
+    image: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=600&q=80",
+  },
+  {
+    name: "Bodycare",
+    image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=600&q=80",
+  },
+  {
+    name: "Haircare",
+    image: "https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?w=600&q=80",
+  },
+  {
+    name: "Parfum",
+    image: "https://images.unsplash.com/photo-1541643600914-78b084683601?w=600&q=80",
+  },
+  {
+    name: "Makeup",
+    image: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=600&q=80",
+  },
+  {
+    name: "Baby Care",
+    image: "https://images.unsplash.com/photo-1555252333-9f8e92e65df9?w=600&q=80",
+  },
+];
+
 // --- BLOG / ARTIKEL (16:9 landscape, 800px) ---
 export const blogImages = {
   skincareGuide:

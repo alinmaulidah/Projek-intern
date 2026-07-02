@@ -121,7 +121,7 @@ const certColors = [
     </section>
 
     <!-- ================================================================== -->
-    <!-- 2. SERTIFIKASI CARDS — Large interactive certificate cards         -->
+    <!-- 2. SERTIFIKASI CARDS — Compact, deskripsi di hover popup           -->
     <!-- ================================================================== -->
     <section id="sertifikat" class="relative overflow-hidden bg-base-100 py-20">
       <div class="pointer-events-none absolute -right-60 -top-60 h-[500px] w-[500px] rounded-full bg-primary/5 blur-3xl"></div>
@@ -133,10 +133,10 @@ const certColors = [
             const color = certColors[i % certColors.length];
             return (
               <div
-                class="group card overflow-hidden border border-base-200 bg-base-100 shadow-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-xl"
+                class="group card relative overflow-visible border border-base-200 bg-base-100 shadow-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-xl"
               >
                 <!-- Certificate photo -->
-                <figure class="h-40 overflow-hidden">
+                <figure class="h-40 overflow-hidden rounded-t-2xl">
                   <img src={cert.image} alt={cert.name} class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy" />
                 </figure>
 
@@ -151,13 +151,31 @@ const certColors = [
                     <p class={`mt-1 text-sm font-semibold ${color.text}`}>{cert.fullName}</p>
                   </div>
 
-                  <p class="relative z-10 mt-4 text-sm leading-relaxed text-base-content/70">{cert.desc}</p>
+                  <!-- Year & Number, no description -->
+                  <div class="relative z-10 mt-4 space-y-1">
+                    {cert.year && (
+                      <p class="text-xs text-base-content/40">Tahun Terbit: <span class="font-semibold text-base-content/60">{cert.year}</span></p>
+                    )}
+                    {cert.number && (
+                      <p class="text-xs text-base-content/40">No: <span class="font-semibold text-base-content/60">{cert.number}</span></p>
+                    )}
+                  </div>
 
                   <!-- Bottom decorative seal -->
-                  <div class={`relative z-10 mt-6 flex items-center gap-2 rounded-full ${color.badge}/10 px-4 py-2 ${color.text} text-xs font-semibold`}>
+                  <div class={`relative z-10 mt-5 flex items-center gap-2 rounded-full ${color.badge}/10 px-4 py-2 ${color.text} text-xs font-semibold`}>
                     <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
                     Terverifikasi & Terdaftar
                   </div>
+                </div>
+
+                <!-- Hover popup — description -->
+                <div class="pointer-events-none absolute bottom-full left-1/2 z-[999] mb-3 w-64 -translate-x-1/2 rounded-2xl border-2 border-primary/20 bg-white p-4 opacity-0 shadow-2xl transition-all duration-300 group-hover:mb-4 group-hover:opacity-100">
+                  <div class="absolute -bottom-2.5 left-1/2 h-5 w-5 -translate-x-1/2 rotate-45 border-b-2 border-r-2 border-primary/20 bg-white"></div>
+                  <div class="mb-2 flex items-center gap-2">
+                    <Icon name={cert.icon} size={16} class="text-primary" />
+                    <span class="text-xs font-bold text-primary">{cert.name} — {cert.fullName}</span>
+                  </div>
+                  <p class="text-xs leading-relaxed text-base-content/60">{cert.desc}</p>
                 </div>
               </div>
             );
