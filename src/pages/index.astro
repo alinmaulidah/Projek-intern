@@ -174,23 +174,22 @@ const comparisons = [
     <!-- ================================================================== -->
     <!-- 3. STATS — Animated counters                                        -->
     <!-- ================================================================== -->
-    <section class="bg-base-100 py-16 md:py-20">
-      <div class="mx-auto max-w-7xl px-4 lg:px-8">
+    <section class="relative overflow-hidden bg-primary py-16 md:py-20">
+      <!-- Decorative overlay -->
+      <div class="absolute inset-0 bg-gradient-to-br from-primary/80 via-primary to-primary/90"></div>
+      <div class="relative z-10 mx-auto max-w-7xl px-4 lg:px-8">
         <div class="grid grid-cols-2 gap-4 md:grid-cols-4">
           {[
-            { value: 500, suffix: "+", label: "Formula", icon: "lucide:flask-conical" },
-            { value: 200, suffix: "+", label: "Brand Partner", icon: "lucide:building-2" },
-            { value: 10, suffix: "+", label: "Tahun", icon: "lucide:clock" },
-            { value: 50, suffix: "+", label: "Tenaga Ahli", icon: "lucide:users" },
+            { value: 500, suffix: "+", label: "Formula" },
+            { value: 200, suffix: "+", label: "Brand Partner" },
+            { value: 10, suffix: "+", label: "Tahun" },
+            { value: 50, suffix: "+", label: "Tenaga Ahli" },
           ].map((stat) => (
-            <div class="group relative overflow-hidden rounded-2xl border border-base-200/60 bg-white p-6 text-center shadow-sm transition-all duration-500 hover:-translate-y-1 hover:border-primary/15 hover:shadow-lg">
-              <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/5 transition-all duration-500 group-hover:scale-110 group-hover:bg-primary/10">
-                <Icon name={stat.icon} class="h-5 w-5 text-primary/60" />
-              </div>
-              <p class="mt-3 text-3xl font-black text-primary tabular-nums">
+            <div class="group relative overflow-hidden rounded-2xl border border-white/15 bg-white/10 p-6 text-center backdrop-blur-sm transition-all duration-500 hover:-translate-y-1 hover:border-white/25 hover:bg-white/15">
+              <p class="text-3xl font-black text-white tabular-nums">
                 <span class="stat-counter" data-target={stat.value}>{stat.value}</span>{stat.suffix}
               </p>
-              <p class="mt-1 text-xs font-semibold tracking-wider text-base-content/35 uppercase">{stat.label}</p>
+              <p class="mt-1 text-xs font-semibold tracking-wider text-white/60 uppercase">{stat.label}</p>
             </div>
           ))}
         </div>
@@ -200,7 +199,7 @@ const comparisons = [
     <!-- ================================================================== -->
     <!-- 4. LAYANAN — Service cards with image hover overlay                 -->
     <!-- ================================================================== -->
-    <section id="layanan" class="bg-base-200/50 py-20 md:py-28">
+    <section id="layanan" class="bg-base-100 py-20 md:py-28">
       <div class="mx-auto max-w-7xl px-4 lg:px-8">
         <div class="mx-auto max-w-2xl text-center">
           <span class="badge badge-soft badge-primary text-xs font-bold tracking-widest uppercase">Layanan Maklon</span>
@@ -260,7 +259,7 @@ const comparisons = [
     <!-- ================================================================== -->
     <!-- 5. KEUNGGULAN — Icon cards with hover accent                        -->
     <!-- ================================================================== -->
-    <section id="keunggulan" class="bg-base-100 py-20 md:py-28">
+    <section id="keunggulan" class="bg-base-200/50 py-20 md:py-28">
       <div class="mx-auto max-w-7xl px-4 lg:px-8">
         <div class="mx-auto max-w-2xl text-center">
           <span class="badge badge-soft badge-primary text-xs font-bold tracking-widest uppercase">Mengapa Kami</span>
@@ -289,7 +288,7 @@ const comparisons = [
     <!-- ================================================================== -->
     <!-- 6. PRODUCT SHOWCASE — Modern hover cards                            -->
     <!-- ================================================================== -->
-    <section id="produk" class="bg-base-200/50 py-20 md:py-28">
+    <section id="produk" class="bg-base-100 py-20 md:py-28">
       <div class="mx-auto max-w-7xl px-4 lg:px-8">
         <div class="mx-auto max-w-2xl text-center">
           <span class="badge badge-soft badge-primary text-xs font-bold tracking-widest uppercase">Produk Maklon</span>
@@ -331,7 +330,7 @@ const comparisons = [
     <!-- ================================================================== -->
     <!-- 7. PROCESS — Interactive timeline + mobile carousel                 -->
     <!-- ================================================================== -->
-    <section id="alur" class="bg-base-100 py-20 md:py-28">
+    <section id="alur" class="bg-base-200/50 py-20 md:py-28">
       <div class="mx-auto max-w-7xl px-4 lg:px-8">
         <div class="mx-auto max-w-2xl text-center">
           <span class="badge badge-soft badge-primary text-xs font-bold tracking-widest uppercase">Alur Maklon</span>
@@ -473,7 +472,7 @@ const comparisons = [
     <!-- ================================================================== -->
     <!-- 8. FACTORY GALLERY — Image cards                                    -->
     <!-- ================================================================== -->
-    <section class="bg-base-200/50 py-20 md:py-28">
+    <section class="bg-base-100 py-20 md:py-28">
       <div class="mx-auto max-w-7xl px-4 lg:px-8">
         <div class="mx-auto max-w-2xl text-center">
           <span class="badge badge-soft badge-primary text-xs font-bold tracking-widest uppercase">Fasilitas</span>
@@ -505,7 +504,7 @@ const comparisons = [
     <!-- ================================================================== -->
     <!-- 9. COMPARISON — Table                                               -->
     <!-- ================================================================== -->
-    <section class="bg-base-100 py-20 md:py-28">
+    <section class="bg-base-200/50 py-20 md:py-28">
       <div class="mx-auto max-w-4xl px-4 lg:px-8">
         <div class="mx-auto max-w-2xl text-center">
           <span class="badge badge-soft badge-primary text-xs font-bold tracking-widest uppercase">Perbandingan</span>
@@ -545,7 +544,7 @@ const comparisons = [
     <!-- ================================================================== -->
     <!-- 10. SERTIFIKASI & LEGALITAS — Trust badges                          -->
     <!-- ================================================================== -->
-    <section class="bg-base-200/50 py-20 md:py-28">
+    <section class="bg-base-100 py-20 md:py-28">
       <div class="mx-auto max-w-7xl px-4 lg:px-8">
         <div class="mx-auto max-w-2xl text-center">
           <span class="badge badge-soft badge-primary text-xs font-bold tracking-widest uppercase">Sertifikasi</span>
