@@ -179,7 +179,7 @@ const waLink = createWhatsappLink(siteConfig.waNumber, "Halo, saya tertarik untu
 
     function closeOverlay() {
       card.classList.remove("porto-card-active");
-      overlay.style.display = "";
+      overlay.style.display = "none";
       overlay.style.opacity = "";
       if (brandLabel) brandLabel.style.opacity = "";
       if (tapIndicator && isTouchDevice) tapIndicator.style.opacity = "1";
@@ -190,7 +190,7 @@ const waLink = createWhatsappLink(siteConfig.waNumber, "Halo, saya tertarik untu
       const ovl = c.querySelector(".porto-overlay") as HTMLElement;
       const lbl = c.querySelector(".porto-brand-label") as HTMLElement;
       const ind = c.querySelector(".porto-tap-indicator") as HTMLElement;
-      if (ovl) { ovl.style.display = ""; ovl.style.opacity = ""; }
+      if (ovl) { ovl.style.display = "none"; ovl.style.opacity = ""; }
       if (lbl) lbl.style.opacity = "";
       if (ind && isTouchDevice) ind.style.opacity = "1";
     }
@@ -223,7 +223,7 @@ const waLink = createWhatsappLink(siteConfig.waNumber, "Halo, saya tertarik untu
         const ovl = card.querySelector(".porto-overlay") as HTMLElement;
         const lbl = card.querySelector(".porto-brand-label") as HTMLElement;
         const ind = card.querySelector(".porto-tap-indicator") as HTMLElement;
-        if (ovl) { ovl.style.display = ""; ovl.style.opacity = ""; }
+        if (ovl) { ovl.style.display = "none"; ovl.style.opacity = ""; }
         if (lbl) lbl.style.opacity = "";
         const isTouch = "ontouchstart" in window || navigator.maxTouchPoints > 0;
         if (ind && isTouch) ind.style.opacity = "1";
